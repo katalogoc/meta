@@ -1,0 +1,44 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:11
+
+    steps:
+      - checkout
+
+      - run:
+          name: Installing dependencies
+          command: npm install
+
+      - run:
+          name: Starting server
+          command: npm run start:dev
+          background: true
+      - run:
+          name: Waiting for the server
+          command: sleep 5
+
+      # This will authenticate using the `ENGINE_API_KEY` environment
+      # variable. If the GraphQL server is available somewhere other than
+      # http://localhost:4000/graphql, set it with `--endpoint=<URL>`.
+      - run:
+          name: Diffing GraphQL schema
+          command: npm run schema:check
+
+      # When running on the 'master' branch, publish the latest version
+      # of the schema to Apollo Engine.
+      - run:
+          name: Publishing GraphQL schema
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              npm run schema:publish
+            fi
+      - run:
+          name: Lint
+          command: npm run lint
+
+      - run:
+          name: Test
+          command: npm test

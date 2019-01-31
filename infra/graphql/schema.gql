@@ -1,0 +1,74 @@
+type Like {
+  id: ID!
+  author: Author!
+  entityId: String!
+  entityType: String!
+}
+
+interface Likeable {
+  likes: [Like]!
+}
+
+type Author implements Likeable {
+  id: ID!
+  nickname: String!
+  email: String!
+  articles: [Article]!
+  comments: [Comment]!
+  likes: [Like]!
+}
+
+type Article implements Likeable {
+  id: ID!
+  author: Author!
+  title: String
+  text: String
+  likes: [Like]!
+}
+
+type Avatar {
+  medias: [String]!
+}
+
+union Topic = Article | Author | Comment
+
+type Comment implements Likeable {
+  id: ID!
+  text: String!
+  author: Author!
+  topic: Topic!
+  comments: [Comment]!
+  likes: [Like]!
+}
+
+type Query {
+  articles: [Article]
+  author(id: ID!): Author
+  authors: [Author]!
+}
+
+input ArticleInput {
+  id: ID
+  title: String
+  text: String
+}
+
+input AccountInput {
+  email: String!
+  password: String!
+}
+
+type CommentUpdate {
+  id: ID!
+  text: String!
+  author: ID!
+}
+
+type Mutation {
+  createAccount(accountInput: AccountInput!): String!
+  deleteAccount(accountInput: AccountInput!): Boolean!
+  login(accountInput: AccountInput!): String!
+  saveArticle(articleInput: ArticleInput!): Article
+  commentArticle(id: ID!, comment: String): CommentUpdate
+  like(id: String!, type: String!): Boolean
+}
