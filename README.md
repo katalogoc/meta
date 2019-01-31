@@ -1,0 +1,2 @@
+# texts
+Text service
