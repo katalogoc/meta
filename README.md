@@ -1,2 +1,2 @@
-# texts
-Text service
+# meta
+Meta info service
