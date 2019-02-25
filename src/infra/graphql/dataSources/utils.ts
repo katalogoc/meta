@@ -24,7 +24,7 @@ export async function* traverse(
   const files = await readdir(dir, {
     withFileTypes: true,
     ...readDirOptions,
-  }).catch(error => {
+  }).catch((error: Error) => {
     logger.error(`Traverse failed on dir ${dir}\n${error}`);
 
     throw error;
@@ -42,7 +42,7 @@ export async function* traverse(
 }
 
 export const filter = <T>(predicate: (val: T) => boolean) =>
-  async function* filter(stream: AsyncIterableIterator<any>): AsyncIterableIterator<T> {
+  async function* filter(stream: AsyncIterableIterator<T>): AsyncIterableIterator<T> {
     for await (const chunk of stream) {
       if (predicate(chunk)) {
         yield chunk;
@@ -54,6 +54,17 @@ export const map = <I, O = any>(mapper: (val: I) => O) =>
   async function* map(stream: AsyncIterableIterator<I>) {
     for await (const chunk of stream) {
       yield mapper(chunk);
+    }
+  };
+
+export const take = <T>(n: number) =>
+  async function*(stream: AsyncIterableIterator<T>) {
+    for await (const x of stream) {
+      if (n <= 0) {
+        return;
+      }
+      n--;
+      yield x;
     }
   };
 
@@ -97,3 +108,6 @@ export const untar = (tarball: string, dest: string) => {
     writable.on('error', reject);
   });
 };
+
+export const createDataMapper = <I, O>(transformer: (i: I) => O) => (data: I | I[]): O | O[] =>
+  Array.isArray(data) ? data.map(transformer) : transformer(data);

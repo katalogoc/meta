@@ -8,4 +8,3 @@ const config = nconf
   .file({ file: path.join(__dirname, './config.json') });
 
 export default config;
-
