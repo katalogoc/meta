@@ -17,7 +17,7 @@
     "schema:introspect": "curl -X POST -d \"@fixtures/introspect.json\" --header \"Content-Type: application/json\" http://localhost:8082/api",
     "seed": "dotenv sequelize db:seed:all",
     "start": "pm2 start --no-daemon",
-    "dev": "ts-node-dev --files src/index.ts --max_old_space_size=4096",
+    "start:dev": "ts-node-dev --files src/index.ts --max_old_space_size=4096",
     "gen:apq": "persistgraphql src/interfaces/graphql/persistedQueries/ src/interfaces/graphql/persistedQueries/config.json",
     "lint": "tslint --project "
   },

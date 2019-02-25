@@ -1,17 +1,18 @@
 import { Sequelize } from 'sequelize-typescript';
 import hypedLogger from 'hyped-logger';
+import config from '../../config';
 
 const logger = hypedLogger();
 
 export const sequelize = new Sequelize({
-  host: 'localhost',
-  port: 5432,
-  database: 'meta',
-  username: 'shonie',
-  password: 'JohnColtrane666',
-  dialect: 'postgres',
-  logging: logger.info,
+  host: config.get('DB_HOST'),
+  port: config.get('DB_PORT'),
+  database: config.get('DB_DATABASE'),
+  username: config.get('DB_USERNAME'),
+  password: config.get('DB_PASSWORD'),
+  dialect: config.get('DB_DIALECT'),
   modelPaths: [__dirname + '/models/**/*.ts'],
+  // logging: logger.info,
 });
 
 export const authenticate = () =>

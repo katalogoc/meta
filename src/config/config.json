@@ -1,7 +1,6 @@
 {
   "PORT": 8082,
   "HOST": "0.0.0.0",
-  "DATABASE_URL": "postgres://localhost:5433",
   "GUTENBERG_CATALOG": "http://www.gutenberg.org/cache/epub/feeds/rdf-files.tar.zip",
   "GUTENBERG_DOCUMENTS_MAX_COUNT": 5000
 }
