@@ -17,7 +17,7 @@ export const getAllTexts = ({ limit, offset }: QueryOptions) => `
   SELECT DISTINCT *
   WHERE {
     ?id dc:title ?title ;
-          dc:creator/pg:webpage ?aboutAuthor ;
+          dc:creator/pg:webpage ?wikiAboutAuthors ;
           dc:issued ?issued ;
           dc:publisher ?publisher ;
           dc:language ?language

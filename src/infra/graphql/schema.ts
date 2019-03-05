@@ -12,9 +12,9 @@ export default gql`
   }
 
   type Author {
-    id: String
-    fullname: String
+    id: String!
     lifetime: Lifetime!
+    name: String
     alias: String
     influences: [Author]
     influenced: [Author]
@@ -27,12 +27,12 @@ export default gql`
     url: String!
     type: String!
     title: String
-    author: Author
-    aboutAuthor: [String]
+    authors: [Author]
     subject: String
     publisher: String
     downloads: Int
     issued: String
+    wikiAboutAuthors: [String]
   }
 
   type Query {

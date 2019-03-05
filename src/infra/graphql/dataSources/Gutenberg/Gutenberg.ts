@@ -23,7 +23,7 @@ class Gutenberg extends DataSource {
 
     return parseSparqlJson(response, 'id').map((text: Text) => ({
       ...text,
-      aboutAuthor: Array.isArray(text.aboutAuthor) ? text.aboutAuthor : [text.aboutAuthor],
+      wikiAboutAuthors: Array.isArray(text.wikiAboutAuthors) ? text.wikiAboutAuthors : [text.wikiAboutAuthors],
     }));
   }
 

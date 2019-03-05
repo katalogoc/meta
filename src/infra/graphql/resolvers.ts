@@ -17,8 +17,8 @@ export default {
     },
   },
   Text: {
-    async author(text: Text, _: any, { dataSources }: any) {
-      return dataSources.DBpedia.getAuthorByWikiUrl(text.aboutAuthor);
+    async authors(text: Text, _: any, { dataSources }: any) {
+      return text.wikiAboutAuthors.map((wikiUrl: string) => dataSources.DBpedia.getAuthorByWikiUrl(wikiUrl));
     },
   },
 };

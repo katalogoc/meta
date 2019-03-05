@@ -2,6 +2,7 @@ import { DataSource, DataSourceConfig } from 'apollo-datasource';
 import { Author, SparqlClient } from '../../../../types';
 import { sparql, parseSparqlJson } from '../../util';
 import { getDbPediaEntityByWikiUrl } from './queries';
+import { inspect } from 'util';
 
 class DBpedia extends DataSource {
   private client: SparqlClient;
@@ -22,10 +23,12 @@ class DBpedia extends DataSource {
     return this.client.query(query);
   }
 
-  public async getAuthorByWikiUrl(wikiUrl: string): Promise<any[]> {
+  public async getAuthorByWikiUrl(wikiUrl: string): Promise<any> {
     const response = await sparql(this.client, getDbPediaEntityByWikiUrl(wikiUrl));
 
-    return parseSparqlJson(response, 'id');
+    const authors = parseSparqlJson(response, 'id');
+
+    return authors.length ? authors[0] : null;
   }
 }
 
