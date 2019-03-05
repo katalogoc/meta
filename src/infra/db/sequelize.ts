@@ -4,7 +4,7 @@ import config from '../../config';
 
 const logger = hypedLogger();
 
-export const sequelize = new Sequelize({
+const sequelizeConfig = {
   host: config.get('DB_HOST'),
   port: config.get('DB_PORT'),
   database: config.get('DB_DATABASE'),
@@ -13,7 +13,9 @@ export const sequelize = new Sequelize({
   dialect: config.get('DB_DIALECT'),
   modelPaths: [__dirname + '/models/**/*.ts'],
   // logging: logger.info,
-});
+};
+
+export const sequelize = new Sequelize(sequelizeConfig);
 
 export const authenticate = () =>
   sequelize

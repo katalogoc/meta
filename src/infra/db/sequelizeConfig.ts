@@ -1,22 +1,18 @@
 import config from '../../config';
-import parseDbUrl from 'parse-database-url';
 
-const { user: username, password, database, host, port, driver } = parseDbUrl(config.get('DATABASE_URL') || 'postgres://localhost:5433');
-
-const cfg = {
-  password,
-  database,
-  host,
-  port,
-  username,
-  dialect: driver,
-  dialectOptions: {
-    ssl: true,
-  },
+export const sequelizeConfig = {
+  host: config.get('DB_HOST'),
+  port: config.get('DB_PORT'),
+  database: config.get('DB_DATABASE'),
+  username: config.get('DB_USERNAME'),
+  password: config.get('DB_PASSWORD'),
+  dialect: config.get('DB_DIALECT'),
+  modelPaths: [__dirname + '/models/**/*.ts'],
+  // logging: logger.info,
 };
 
 export default {
-  test: cfg,
-  development: cfg,
-  production: cfg,
+  test: sequelizeConfig,
+  development: sequelizeConfig,
+  production: sequelizeConfig,
 };

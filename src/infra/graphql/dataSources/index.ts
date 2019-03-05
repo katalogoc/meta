@@ -1,15 +1,13 @@
 import Gutenberg from './Gutenberg';
-import GutenbergGraph from './Gutenberg/GutenbergGraph';
+import SparqlClient from 'sparql-client';
 import DBpediaSource from './DBpedia';
-import DBpediaClient from './DBpedia/DBpediaClient';
+import config from '../../../config';
 
-const gutenberg = new Gutenberg(GutenbergGraph.getInstance());
+const gutenberg = new Gutenberg(new SparqlClient(config.get('GUTENBERG_SPARQL_ENDPOINT')));
 
-const DBpedia = new DBpediaSource(DBpediaClient.client());
+const DBpedia = new DBpediaSource(new SparqlClient(config.get('DB_PEDIA_SPARQL_ENDPOINT')));
 
 export default () => ({
   gutenberg,
   DBpedia,
 });
-
-export * from './types';

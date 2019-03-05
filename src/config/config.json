@@ -1,6 +1,5 @@
 {
   "PORT": 8082,
-  "HOST": "0.0.0.0",
-  "GUTENBERG_CATALOG": "http://www.gutenberg.org/cache/epub/feeds/rdf-files.tar.zip",
-  "GUTENBERG_DOCUMENTS_MAX_COUNT": 5000
+  "GUTENBERG_SPARQL_ENDPOINT": "http://fuseki:3030/texts/sparql",
+  "DB_PEDIA_SPARQL_ENDPOINT": "http://dbpedia.org/sparql"
 }

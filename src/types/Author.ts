@@ -1,5 +1,3 @@
-export * from './gutenberg';
-
 export interface Lifetime {
   born: number;
   died: number;
