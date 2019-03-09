@@ -1,7 +1,8 @@
 import { promisify } from 'util';
-import { SparqlClient, SparqlBinding, HashMap } from '../../types';
+import { SparqlClient, SparqlBinding, HashMap } from '../types';
 import { get, has } from 'lodash';
 import R from 'ramda';
+import fetch from 'isomorphic-fetch';
 
 export const sparql = (client: SparqlClient, query: string) => promisify(client.query(query).execute.bind(client))();
 
@@ -50,3 +51,6 @@ export const parseSparqlJson = (response: any, primaryKey: string): Array<HashMa
 
   return Object.values(deduped);
 };
+
+export const ping = (host: string): Promise<string> =>
+  fetch(host).then((res: Response) => (res.status >= 400 ? Promise.reject(res) : res.text()));

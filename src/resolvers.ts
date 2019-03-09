@@ -1,4 +1,4 @@
-import { Text } from '../../types';
+import { Text } from './types';
 
 export default {
   Query: {

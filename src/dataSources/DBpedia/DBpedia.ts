@@ -1,5 +1,5 @@
 import { DataSource, DataSourceConfig } from 'apollo-datasource';
-import { Author, SparqlClient } from '../../../../types';
+import { Author, SparqlClient } from '../../types';
 import { sparql, parseSparqlJson } from '../../util';
 import { getDbPediaEntityByWikiUrl } from './queries';
 import { inspect } from 'util';

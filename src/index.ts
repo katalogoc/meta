@@ -1,3 +1,4 @@
 import app from './app';
+import server from './server';
 
-app.start();
+(async () => server(app))();

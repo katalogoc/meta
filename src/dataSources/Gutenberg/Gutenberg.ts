@@ -1,6 +1,6 @@
 import { DataSource, DataSourceConfig } from 'apollo-datasource';
-import { Author, Text, SparqlClient, QueryOptions } from '../../../../types';
-import { sparql, parseSparqlJson } from '../../util';
+import { Author, Text, SparqlClient, QueryOptions } from '../../types';
+import { sparql, parseSparqlJson, ping } from '../../util';
 import { getAllTexts } from './queries';
 
 class Gutenberg extends DataSource {
@@ -14,7 +14,7 @@ class Gutenberg extends DataSource {
     this.client = client;
   }
 
-  public initialize({ context }: DataSourceConfig<any>): void {
+  public async initialize({ context }: DataSourceConfig<any>): Promise<void> {
     this.context = context;
   }
 

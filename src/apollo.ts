@@ -3,9 +3,9 @@ import { RedisCache } from 'apollo-server-redis';
 import parseDbUrl from 'parse-database-url';
 import createLogger from 'hyped-logger';
 import typeDefs from './schema';
-import config from '../../config';
+import config from './config';
 import resolvers from './resolvers';
-import dataSources from './dataSources';
+import dataSources from './dataSources/index';
 
 const logger = createLogger();
 

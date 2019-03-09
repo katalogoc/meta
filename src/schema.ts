@@ -20,6 +20,7 @@ export default gql`
     influenced: [Author]
     contemporaries: [Author]
     texts: [Text]
+    thumbnail: String
   }
 
   type Text {
