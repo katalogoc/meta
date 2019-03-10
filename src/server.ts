@@ -37,15 +37,14 @@ export default async (app: Koa) => {
       }
     });
 
-    process.on('SIGINT', async () => {
+    process.on('SIGINT', () => {
       logger.info('SIGINT signal received.');
 
-      server.close(async (err: Error) => {
-        if (err) {
-          logger.error(err);
-          process.exit(1);
+      server.close(
+        (): void => {
+          process.exit();
         }
-      });
+      );
     });
   });
 };
