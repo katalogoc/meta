@@ -1,10 +1,12 @@
-const config = require('./config');
+const host = 'localhost';
+
+const port = 8081;
 
 module.exports = {
   client: {
     service: {
       name: 'hyped-text-meta',
-      url: `http://${config.get('HOST')}:${config.get('PORT')}/api`,
+      url: `http://${host}:${port}/api`,
     },
   },
 };

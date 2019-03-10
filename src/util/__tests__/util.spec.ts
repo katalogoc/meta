@@ -1,6 +1,6 @@
 import test, { ExecutionContext } from 'ava';
-import sparqlResponse from '../../fixtures/sparql-response.json';
-import { parseSparqlJson } from '../util';
+import sparqlResponse from '../../../fixtures/sparql-response.json';
+import { parseSparqlJson } from '..';
 
 const parsed = parseSparqlJson(sparqlResponse, 'text');
 

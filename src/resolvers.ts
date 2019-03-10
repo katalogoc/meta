@@ -3,9 +3,7 @@ import { Text } from './types';
 export default {
   Query: {
     async author(_: any, { id }: any, { dataSources }: any) {
-      const gutenbergData = dataSources.gutenberg.getAuthorById(id);
-
-      return gutenbergData;
+      return dataSources.DBpedia.getAuthorByWikiUrl(id);
     },
     async texts(_: any, { options }: any, { dataSources }: any) {
       return dataSources.gutenberg.getAllTexts(options);

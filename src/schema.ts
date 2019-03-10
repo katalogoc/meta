@@ -12,7 +12,7 @@ export default gql`
   }
 
   type Author {
-    id: String!
+    id: ID!
     lifetime: Lifetime!
     name: String
     alias: String
@@ -24,7 +24,7 @@ export default gql`
   }
 
   type Text {
-    id: String!
+    id: ID!
     url: String!
     type: String!
     title: String
