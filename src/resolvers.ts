@@ -16,7 +16,11 @@ export default {
   },
   Text: {
     async authors(text: Text, _: any, { dataSources }: any) {
-      return text.wikiAboutAuthors.map((wikiUrl: string) => dataSources.DBpedia.getAuthorByWikiUrl(wikiUrl));
+      const authors = await Promise.all(
+        text.authors.map((authorWikiUrl: string) => dataSources.DBpedia.getAuthorByWikiUrl(authorWikiUrl))
+      );
+
+      return authors.filter(Boolean);
     },
   },
 };

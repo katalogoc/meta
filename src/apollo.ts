@@ -30,16 +30,8 @@ export default new ApolloServer({
       }
       return false;
     },
-    retryStrategy(times: number) {
-      logger.info('Redis Retry', times);
-
-      if (times >= 3) {
-        return undefined;
-      }
-
-      const delay = Math.min(times * 50, 5000);
-
-      return delay;
+    retryStrategy() {
+      logger.info(`Redis at ${config.get('REDIS_URL')} is unavailable`);
     },
     socket_keepalive: false,
     ...parseDbUrl(config.get('REDIS_URL')),

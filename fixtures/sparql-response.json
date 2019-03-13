@@ -1,28 +1,50 @@
-{
-  "head": { "vars": ["text", "title", "authorWikiPage", "issued", "publisher"] },
-  "results": {
-    "bindings": [
-      {
-        "text": { "type": "uri", "value": "http://www.gutenberg.org/ebooks/10080" },
-        "title": { "type": "literal", "value": "Mobilizing Woman-Power" },
-        "authorWikiPage": { "type": "uri", "value": "http://en.wikipedia.org/wiki/Harriot_Eaton_Stanton_Blatch" },
-        "issued": { "type": "literal", "datatype": "http://www.w3.org/2001/XMLSchema#date", "value": "2003-11-01" },
-        "publisher": { "type": "literal", "value": "Project Gutenberg" }
-      },
-      {
-        "text": { "type": "uri", "value": "http://www.gutenberg.org/ebooks/10279" },
-        "title": { "type": "literal", "value": "Uncle Tom's Cabin: Entrance of Topsy" },
-        "authorWikiPage": { "type": "uri", "value": "http://en.wikipedia.org/wiki/Harriet_Beecher_Stowe" },
-        "issued": { "type": "literal", "datatype": "http://www.w3.org/2001/XMLSchema#date", "value": "2003-11-01" },
-        "publisher": { "type": "literal", "value": "Project Gutenberg" }
-      },
-      {
-        "text": { "type": "uri", "value": "http://www.gutenberg.org/ebooks/10279" },
-        "title": { "type": "literal", "value": "Uncle Tom's Cabin: Entrance of Topsy" },
-        "authorWikiPage": { "type": "uri", "value": "http://en.wikipedia.org/wiki/Len_Spencer" },
-        "issued": { "type": "literal", "datatype": "http://www.w3.org/2001/XMLSchema#date", "value": "2003-11-01" },
-        "publisher": { "type": "literal", "value": "Project Gutenberg" }
-      }
-    ]
+[
+  {
+    "id": "http://www.gutenberg.org/ebooks/1",
+    "title": "The Declaration of Independence of the United States of America",
+    "author": "http://en.wikipedia.org/wiki/Thomas_Jefferson",
+    "source": "http://www.gutenberg.org/ebooks/1.txt.utf-8",
+    "format": "application/rdf+xml",
+    "language": "en"
+  },
+  {
+    "id": "http://www.gutenberg.org/ebooks/1",
+    "title": "The Declaration of Independence of the United States of America",
+    "author": "http://en.wikipedia.org/wiki/Thomas_Jefferson",
+    "source": "http://www.gutenberg.org/ebooks/1.txt.utf-8",
+    "format": "application/x-mobipocket-ebook",
+    "language": "en"
+  },
+  {
+    "id": "http://www.gutenberg.org/ebooks/1",
+    "title": "The Declaration of Independence of the United States of America",
+    "author": "http://en.wikipedia.org/wiki/Thomas_Jefferson",
+    "source": "http://www.gutenberg.org/files/1/1-0.zip",
+    "format": "application/prs.tex",
+    "language": "en"
+  },
+  {
+    "id": "http://www.gutenberg.org/ebooks/1",
+    "title": "The Declaration of Independence of the United States of America",
+    "author": "http://en.wikipedia.org/wiki/Thomas_Jefferson",
+    "source": "http://www.gutenberg.org/files/1/1-0.zip",
+    "format": "application/zip",
+    "language": "en"
+  },
+  {
+    "id": "http://www.gutenberg.org/ebooks/100",
+    "title": "The Complete Works of William Shakespeare",
+    "author": "http://en.wikipedia.org/wiki/William_Shakespeare",
+    "source": "http://www.gutenberg.org/files/100/100-h.zip",
+    "format": "application/x-mobipocket-ebook",
+    "language": "en"
+  },
+  {
+    "id": "http://www.gutenberg.org/ebooks/100",
+    "title": "The Complete Works of William Shakespeare",
+    "author": "http://en.wikipedia.org/wiki/William_Shakespeare",
+    "source": "http://www.gutenberg.org/files/100/100-h.zip",
+    "format": "application/rdf+xml",
+    "language": "en"
   }
-}
+]

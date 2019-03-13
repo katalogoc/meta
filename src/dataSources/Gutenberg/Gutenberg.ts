@@ -1,7 +1,9 @@
 import { DataSource, DataSourceConfig } from 'apollo-datasource';
-import { Author, Text, SparqlClient, QueryOptions } from '../../types';
-import { sparql, parseSparqlJson, ping } from '../../util';
+import { Author, Text, SparqlClient, QueryOptions, HashMap } from '../../types';
+import { sparql, parseSparqlJson } from '../../util';
+import text from '../../domain/text';
 import { getAllTexts } from './queries';
+import { get } from 'lodash';
 
 class Gutenberg extends DataSource {
   private context: DataSourceConfig<any>['context'];
@@ -21,10 +23,27 @@ class Gutenberg extends DataSource {
   public async getAllTexts(options: QueryOptions) {
     const response = await sparql(this.client, getAllTexts(options));
 
-    return parseSparqlJson(response, 'id').map((text: Text) => ({
-      ...text,
-      wikiAboutAuthors: Array.isArray(text.wikiAboutAuthors) ? text.wikiAboutAuthors : [text.wikiAboutAuthors],
-    }));
+    const result = parseSparqlJson(response, {
+      primaryKeyName: 'id',
+      plural: {
+        authors: true,
+        subject: true,
+        format: false,
+        language: false,
+        source: (row: HashMap<any>) => ({
+          url: row.source,
+          format: row.format,
+          language: row.language,
+        }),
+      },
+    });
+
+    return result.map((t: Text) =>
+      text({
+        ...t,
+        url: get(t, ['source', 0, 'url']),
+      })
+    );
   }
 
   public async getAuthorBooks(): Promise<Author | null> {

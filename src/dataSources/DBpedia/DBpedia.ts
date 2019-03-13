@@ -26,9 +26,11 @@ class DBpedia extends DataSource {
   public async getAuthorByWikiUrl(wikiUrl: string): Promise<any> {
     const response = await sparql(this.client, getDbPediaEntityByWikiUrl(wikiUrl));
 
-    const authors = parseSparqlJson(response, 'id');
+    const [author] = parseSparqlJson(response, {
+      primaryKeyName: 'id',
+    });
 
-    return authors.length ? authors[0] : null;
+    return author && author.id ? author : null;
   }
 }
 
