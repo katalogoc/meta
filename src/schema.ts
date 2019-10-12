@@ -37,4 +37,28 @@ export default gql`
     texts(options: QueryOptions): [Text]!
     text(id: ID!): Text
   }
+
+  input SaveAuthorInput {
+    id: ID
+    birthdate: String
+    deathdate: String
+    name: String
+    aliases: [String]
+    influences: [SaveAuthorInput]
+    influenced: [SaveAuthorInput]
+    contemporaries: [SaveAuthorInput]
+    texts: [SaveTextInput]
+    thumbnail: String
+  }
+
+  input SaveTextInput {
+    id: ID
+    url: String!
+    title: String
+    authors: [SaveAuthorInput]
+  }
+
+  type Mutation {
+    saveText(textInput: SaveTextInput!): Text
+  }
 `;

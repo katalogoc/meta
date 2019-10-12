@@ -1,6 +1,6 @@
 import * as dgraph from 'dgraph-js';
 import grpc from 'grpc';
-import config from '../config';
+import config from '../../config';
 
 const clientStub = new dgraph.DgraphClientStub(
   `${config.get('DGRAPH_HOST')}:${config.get('DGRAPH_PORT')}`,

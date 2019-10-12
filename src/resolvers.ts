@@ -9,6 +9,11 @@ export default {
       return dataSources.gutenberg.getAllTexts(options);
     },
   },
+  Mutation: {
+    async saveText(_: any, { textInput }: any, { dataSources }: any) {
+      return dataSources.store.upsertText(textInput);
+    }
+  },
   Author: {
     async texts(author: any, { name }: any, { dataSources }: any) {
       return dataSources.gutenberg.getAuthorBooks(author.id);
