@@ -38,9 +38,11 @@
   "dependencies": {
     "apollo-datasource": "^0.2.1",
     "apollo-server-koa": "^2.3.1",
+    "dgraph-js": "^2.0.2",
     "dotenv": "^6.1.0",
     "dotenv-cli": "^1.4.0",
     "graphql": "^14.0.2",
+    "grpc": "^1.24.0",
     "hyped-logger": "git+https://github.com/hyped-text/hyped-logger.git",
     "koa": "^2.6.2",
     "koa-bodyparser": "^4.2.1",
@@ -56,11 +58,13 @@
   },
   "devDependencies": {
     "@types/dotenv": "^6.1.0",
+    "@types/google-protobuf": "^3.7.2",
     "@types/graphql": "^14.0.6",
     "@types/jest": "^24.0.18",
     "@types/lodash": "^4.14.144",
     "@types/nconf": "^0.10.0",
     "@types/node": "^10.12.21",
+    "@types/protobufjs": "^6.0.0",
     "@types/ramda": "^0.25.48",
     "@types/sinon": "^7.0.5",
     "@types/tcomb": "^2.6.0",
@@ -72,6 +76,7 @@
     "prettier": "^1.15.3",
     "sinon": "^7.2.3",
     "ts-node": "^8.0.2",
+    "tslint": "^5.20.0",
     "typescript": "^3.3.1"
   }
 }
