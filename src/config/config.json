@@ -1,5 +1,7 @@
 {
   "HOST": "0.0.0.0",
   "PORT": 8082,
-  "DB_PEDIA_SPARQL_ENDPOINT": "http://dbpedia.org/sparql"
+  "DB_PEDIA_SPARQL_ENDPOINT": "http://dbpedia.org/sparql",
+  "DGRAPH_HOST": "localhost",
+  "DGRAPH_PORT": 9080
 }
