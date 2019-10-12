@@ -2,7 +2,6 @@ import { promisify } from 'util';
 import { SparqlClient, HashMap, QueryOptions } from '../types';
 import { get } from 'lodash';
 import R from 'ramda';
-import fetch from 'isomorphic-fetch';
 import wikidata from 'wikidata-sdk';
 import createLogger from 'hyped-logger';
 
@@ -91,9 +90,6 @@ export const parseSparqlJson = (response: any, userOptions: ParseOptions = {}): 
 
   return parseSimplifiedSparqlJson(simplified, options);
 };
-
-export const ping = (host: string): Promise<string> =>
-  fetch(host).then((res: Response) => (res.status >= 400 ? Promise.reject(res) : res.text()));
 
 type AsyncFunction<T> = (...args: any[]) => Promise<T>;
 

@@ -1,6 +1,5 @@
 {
+  "HOST": "0.0.0.0",
   "PORT": 8082,
-  "GUTENBERG_SPARQL_ENDPOINT": "http://fuseki:3030/texts/sparql",
-  "DB_PEDIA_SPARQL_ENDPOINT": "http://dbpedia.org/sparql",
-  "REDIS_URL": "redis://localhost:9209"
+  "DB_PEDIA_SPARQL_ENDPOINT": "http://dbpedia.org/sparql"
 }

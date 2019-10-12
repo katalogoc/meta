@@ -11,7 +11,8 @@
     "typeRoots": ["node_modules/@types", "src/typings"],
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true
   },
   "include": ["./src"],
   "exclude": ["**/__tests__/**/*"]
