@@ -26,9 +26,9 @@ export default gql`
   type Text {
     id: ID!
     url: String!
-    title: String!
-    authors: [Author]!
-    subject: [String]!
+    title: String
+    authors: [Author]
+    subject: [String]
   }
 
   type Query {
@@ -59,6 +59,6 @@ export default gql`
   }
 
   type Mutation {
-    saveText(textInput: SaveTextInput!): Text
+    saveText(textInput: SaveTextInput!): Text!
   }
 `;
