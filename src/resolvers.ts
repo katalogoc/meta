@@ -12,7 +12,7 @@ export default {
   Mutation: {
     async saveText(_: any, { textInput }: any, { dataSources }: any) {
       return dataSources.store.upsertText(textInput);
-    }
+    },
   },
   Author: {
     async texts(author: any, { name }: any, { dataSources }: any) {
@@ -22,7 +22,7 @@ export default {
   Text: {
     async authors(text: Text, _: any, { dataSources }: any) {
       const authors = await Promise.all(
-        text.authors.map((authorWikiUrl: string) => dataSources.DBpedia.getAuthorByWikiUrl(authorWikiUrl))
+        (text.authors || []).map((authorWikiUrl: any) => dataSources.DBpedia.getAuthorByWikiUrl(authorWikiUrl))
       );
 
       return authors.filter(Boolean);

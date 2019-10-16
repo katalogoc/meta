@@ -1,4 +1,4 @@
-import createStore from './createStore';
-import client from './client';
+import StoreDataSource from './StoreDataSource';
+import db from '../../db';
 
-export default createStore(client);
+export default new StoreDataSource(db.client);
