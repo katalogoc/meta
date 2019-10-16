@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run this test",
+            "type": "shell",
+            "command": "npm test -- ${relativeFile}",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "Watch this test",
+            "type": "shell",
+            "command": "npm run nodemon -- --ext ts,json, --exec 'npm test -- ${relativeFile}'",
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+    ]
+}
