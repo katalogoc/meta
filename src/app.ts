@@ -1,9 +1,15 @@
 import Koa from 'koa';
 import apollo from './apollo';
-import middlewares from './middlewares';
 import createLogger from 'hyped-logger';
+import loggerWinston from 'koa-logger-winston';
+import bodyParser from 'koa-bodyparser';
 
 const logger = createLogger();
+
+const middlewares = [
+  loggerWinston(logger),
+  bodyParser()
+];
 
 const app = new Koa();
 

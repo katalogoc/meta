@@ -1,7 +1,13 @@
 {
-  "watch": ["src"],
+  "watch": [
+    "**/*.ts"
+  ],
   "ext": "ts",
-  "ignore": ["src/**/*.spec.ts"],
   "exec": "ts-node  --files --project tsconfig.json src/bin/server.ts",
-  "verbose": false
+  "verbose": false,
+  "ignore": [
+    ".git",
+    "node_modules/**/node_modules",
+    "**/*.log"
+  ]
 }

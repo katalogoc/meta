@@ -1,4 +1,3 @@
-// tslint:disable-next-line
 require('dotenv').config();
 import nconf from 'nconf';
 import path from 'path';

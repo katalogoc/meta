@@ -1,8 +1,10 @@
 import { createTestClient } from 'apollo-server-testing';
 import server from '../../src/apollo';
-import db from '../../src/db';
+import { init, createClient, dropGraphAndSchema } from '../../src/db';
 
 const { mutate } = createTestClient(server) as any;
+
+const client = createClient();
 
 const SAVE_TEXT = `
     mutation saveText($textInput: SaveTextInput!) {
@@ -20,7 +22,9 @@ const SAVE_TEXT = `
 
 describe('mutations/saveText', () => {
     beforeAll(async () => {
-        await db.init();
+        await dropGraphAndSchema(client);
+
+        await init(client);
     });
 
     test('saves a new text without an author', async () => {
@@ -30,7 +34,7 @@ describe('mutations/saveText', () => {
                 textInput: {
                     // The text is new because it does't have an "id" field
                     title: 'Hawaiian language',
-                    url: 'https://en.wikipedia.org/wiki/Hawaiian_language',
+                    url: 'language',
                     authors: [],
                 },
             },

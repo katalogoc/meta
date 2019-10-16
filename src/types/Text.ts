@@ -1,9 +1,9 @@
 import { Author } from './Author';
 
 export interface Text {
-  url?: string;
-  id?: string;
-  title?: string;
-  authors?: Author[];
-  subject?: string[];
+  url: string | null;
+  id: string | null;
+  title: string | null;
+  authors: Author[];
+  subject: string[];
 }

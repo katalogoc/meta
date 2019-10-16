@@ -1,4 +1,4 @@
-export default `
+export const schema = `
   type Author {
     deathdate: string
     birthdate: string
