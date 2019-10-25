@@ -7,16 +7,16 @@ const { mutate } = createTestClient(server) as any;
 const client = createClient();
 
 const SAVE_TEXT = `
-    mutation saveText($textInput: SaveTextInput!) {
-        saveText(textInput: $textInput) {
-        id
-        url
-        title
-        authors {
-            name
-        }
-            subject
-        }
+    mutation saveText($text: SaveTextInput!) {
+        saveText(text: $text) {
+            id
+            url
+            title
+            authors {
+                name
+            }
+                subject
+            }
     }
 `;
 
@@ -28,22 +28,28 @@ describe('mutations/saveText', () => {
     });
 
     test('saves a new text without an author', async () => {
-        const { data } = await mutate({
+        const title = 'Hawaiian language';
+
+        const url = 'https://hawaiian-language-handbook.com/book';
+
+        const subject = ['linguistics', 'polynesian languages'];
+
+        const { data: { saveText } } = await mutate({
             mutation: SAVE_TEXT,
             variables: {
-                textInput: {
-                    // The text is new because it does't have an "id" field
-                    title: 'Hawaiian language',
-                    url: 'language',
-                    authors: [],
+                text: {
+                    title,
+                    url,
+                    subject,
                 },
             },
         });
 
-        expect(data.saveText.id).toBeDefined();
-
-        expect(typeof data.saveText.id).toBe('string');
-
-        expect(data.saveText.id).toBeTruthy();
+        expect(typeof saveText.id).toBe('string');
+        expect(saveText.id).toBeTruthy();
+        expect(saveText.title).toBe(title);
+        expect(saveText.url).toBe(url);
+        expect(saveText.subject).toEqual(subject);
+        expect(saveText.authors).toEqual([]);
     });
 });

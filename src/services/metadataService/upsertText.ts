@@ -1,38 +1,47 @@
-import { DgraphClient, Mutation } from 'dgraph-js';
+import { DgraphClient, Mutation, Request } from 'dgraph-js';
 import createLogger from 'hyped-logger';
 import _ from 'lodash';
-import { byUid } from './getText';
+import { blankNodeId } from '../../util';
 import { Text } from '../../types';
 
 const logger = createLogger();
 
-export async function upsertText(client: DgraphClient, text: Text): Promise<Text> {
-  const txn = client.newTxn();
+export async function upsertText(client: DgraphClient, { title, url, subject, ...text }: Text): Promise<Text> {
+  const mutation = new Mutation();
 
-  let uid = null;
+  const temporaryId = text.id || title || url;
+
+  const uid = blankNodeId(temporaryId);
+
+  const subjectObjects = subject.map((s: string) => ({
+    uid: blankNodeId(s),
+  }));
+
+  mutation.setSetJson({
+    uid,
+    title,
+    url,
+    'subject': subjectObjects,
+    'dgraph.type': 'Text',
+  });
+
+  const req = new Request();
+
+  req.setMutationsList([mutation]);
+
+  req.setCommitNow(true);
 
   try {
-    const fromDatabase = text.id ? await byUid(client, text.id) : null;
+    const res = await client.newTxn().doRequest(req);
 
-    const mutation = new Mutation();
-
-    mutation.setSetJson({
-      uid: `_:${fromDatabase ? fromDatabase.id : text.url}`,
-      ...text,
-    });
-
-    const res = await txn.mutate(mutation);
-
-    const object: any = res.toObject();
-
-    uid = _.get(object, 'uidsMap.0.0');
+    const id = res.getUidsMap().get(temporaryId) as string;
 
     return {
-      id: uid,
-      title: object.title || 'null',
-      url: object.url || 'null',
+      id,
+      title,
+      url,
+      subject,
       authors: [],
-      subject: [],
     };
   } catch (err) {
     logger.error(`Couldn't upsert a text, error: ${err}`);

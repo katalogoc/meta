@@ -22,3 +22,5 @@ export const createPaginatedStream = <T = any>(request: AsyncFunction<T>) =>
       logger.error(err);
     }
   };
+
+export const blankNodeId = (id: string) => `_:${id}`;

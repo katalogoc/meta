@@ -15,7 +15,11 @@ export const schema = `
     url: string
     title: string
     authors: [Author]
-    subject: [string]
+    subject: [Subject]
+  }
+
+  type Subject {
+    name: string
   }
 
   name: string @index(exact) .

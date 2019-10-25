@@ -56,9 +56,10 @@ export default gql`
     url: String!
     title: String
     authors: [SaveAuthorInput]
+    subject: [String]
   }
 
   type Mutation {
-    saveText(textInput: SaveTextInput!): Text!
+    saveText(text: SaveTextInput!): Text!
   }
 `;

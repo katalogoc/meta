@@ -10,8 +10,8 @@ export default {
     },
   },
   Mutation: {
-    async saveText(_: any, { textInput }: { textInput: Text }, { dataSources }: any) {
-      return dataSources.graphStore.upsertText(textInput);
+    async saveText(_: any, { text }: { text: Text }, { dataSources }: any) {
+      return dataSources.graphStore.upsertText(text);
     },
   },
   Author: {
