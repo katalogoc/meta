@@ -31,7 +31,7 @@ describe('mutations/saveAuthor', () => {
   });
 
   test(`updates an author if it exists`, async () => {
-    const author = fixtures['john-doe'];
+    const author = fixtures['jade-blade'];
 
     const initialResponse = await mutate({
       mutation: SAVE_AUTHOR,
@@ -44,7 +44,7 @@ describe('mutations/saveAuthor', () => {
 
     expect(id.length).toBeGreaterThan(0);
 
-    const newThumbnail = 'https://john-doe.com/my-new-thumbnail.png';
+    const newThumbnail = 'https://jade-blade.com/my-new-thumbnail.png';
 
     await mutate({
       mutation: SAVE_AUTHOR,

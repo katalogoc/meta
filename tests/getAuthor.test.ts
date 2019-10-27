@@ -12,7 +12,7 @@ describe('mutations/getAuthor', () => {
   });
 
   test(`gets an author if it exists`, async () => {
-    const johnDoe = fixtures['john-doe'];
+    const realBill = fixtures['real-bill'];
 
     const {
       data: {
@@ -21,11 +21,11 @@ describe('mutations/getAuthor', () => {
     } = await mutate({
       mutation: SAVE_AUTHOR,
       variables: {
-        author: johnDoe,
+        author: realBill,
       },
     });
 
-    expect(typeof id).toBe('string');
+    expect(id.length).toBeGreaterThan(0);
 
     const {
       data: { author },
@@ -35,12 +35,12 @@ describe('mutations/getAuthor', () => {
         id,
       },
     });
-    expect(typeof author.id).toBe('string');
-    expect(author.birthdate).toBe(johnDoe.birthdate);
-    expect(author.deathdate).toBe(johnDoe.deathdate);
-    expect(author.name).toBe(johnDoe.name);
-    expect(author.alias.sort()).toEqual(johnDoe.alias.sort());
-    expect(author.thumbnail).toEqual(johnDoe.thumbnail);
+    expect(author.id.length).toBeGreaterThan(0);
+    expect(author.birthdate).toBe(realBill.birthdate);
+    expect(author.deathdate).toBe(realBill.deathdate);
+    expect(author.name).toBe(realBill.name);
+    expect(author.alias.sort()).toEqual(realBill.alias.sort());
+    expect(author.thumbnail).toEqual(realBill.thumbnail);
   });
 
   test(`returns null if author doesn't exist`, async () => {
