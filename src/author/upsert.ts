@@ -2,6 +2,7 @@ import { DgraphClient, Mutation, Request } from 'dgraph-js';
 import createLogger from 'hyped-logger';
 import _ from 'lodash';
 import { blankNodeId } from '../common/util';
+import { getById } from './getById';
 import { SaveAuthorInput, Author, Text } from '../common/types';
 
 const logger = createLogger();
@@ -11,22 +12,16 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
 
   const mutation = new Mutation();
 
-  const temporaryId = author.id || '0x01';
+  const fromDb: Author | null = author.id ? await getById(client, author.id).catch(() => null) : null;
+
+  const blankNodeName = 'author';
+
+  const uid: string = fromDb ? (fromDb.id as string) : blankNodeId(blankNodeName);
 
   const req = new Request();
 
-  const query = `
-    query {
-        author as var(func: uid("${temporaryId}"))
-    }
-  `;
-
-  req.setQuery(query);
-
-  const matchedNode = 'uid(author)';
-
   const aliasObjects = alias.map((value: string) => ({
-    uid: matchedNode,
+    uid,
     alias: {
       value,
       uid: blankNodeId(value),
@@ -38,7 +33,7 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
 
   mutation.setSetJson([
     {
-      uid: matchedNode,
+      uid,
       name,
       birthdate,
       deathdate,
@@ -49,8 +44,6 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
     ...aliasObjects,
   ]);
 
-  mutation.setCond(`@if(eq(len(author), 1))`);
-
   req.setMutationsList([mutation]);
 
   req.setCommitNow(true);
@@ -58,11 +51,12 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
   try {
     const res = await client.newTxn().doRequest(req);
 
-    const id = res.getUidsMap().get(matchedNode) as string;
+    const temporaryId = fromDb ? (fromDb.id as string) : blankNodeName;
 
-    console.log(res.getUidsMap().keys());
+    const id = res.getUidsMap().get(temporaryId) as string;
+
     return {
-      id: temporaryId,
+      id,
       name,
       birthdate,
       deathdate,

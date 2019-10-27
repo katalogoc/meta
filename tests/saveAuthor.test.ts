@@ -42,7 +42,7 @@ describe('mutations/saveAuthor', () => {
 
     const { id } = initialResponse.data.saveAuthor;
 
-    expect(typeof id).toBe('string');
+    expect(id.length).toBeGreaterThan(0);
 
     const newThumbnail = 'https://john-doe.com/my-new-thumbnail.png';
 
@@ -51,6 +51,7 @@ describe('mutations/saveAuthor', () => {
       variables: {
         author: {
           ...author,
+          id,
           thumbnail: newThumbnail,
         },
       },
@@ -63,7 +64,6 @@ describe('mutations/saveAuthor', () => {
       },
     });
 
-    console.log(queryResponse);
     expect(queryResponse.data.author.thumbnail).toBe(newThumbnail);
   });
 });
