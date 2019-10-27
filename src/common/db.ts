@@ -35,6 +35,8 @@ export const schema = `
   url: string @index(exact) .
 
   title: string @index(exact) .
+
+  temp_uid: string @index(exact) .
 `;
 
 export function createClient() {

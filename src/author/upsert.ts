@@ -11,12 +11,22 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
 
   const mutation = new Mutation();
 
-  const temporaryId = author.id || (name as string);
+  const temporaryId = author.id || '0x01';
 
-  const uid = blankNodeId(temporaryId);
+  const req = new Request();
+
+  const query = `
+    query {
+        author as var(func: uid("${temporaryId}"))
+    }
+  `;
+
+  req.setQuery(query);
+
+  const matchedNode = 'uid(author)';
 
   const aliasObjects = alias.map((value: string) => ({
-    uid,
+    uid: matchedNode,
     alias: {
       value,
       uid: blankNodeId(value),
@@ -28,7 +38,7 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
 
   mutation.setSetJson([
     {
-      uid,
+      uid: matchedNode,
       name,
       birthdate,
       deathdate,
@@ -39,7 +49,7 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
     ...aliasObjects,
   ]);
 
-  const req = new Request();
+  mutation.setCond(`@if(eq(len(author), 1))`);
 
   req.setMutationsList([mutation]);
 
@@ -48,10 +58,11 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
   try {
     const res = await client.newTxn().doRequest(req);
 
-    const id = res.getUidsMap().get(temporaryId) as string;
+    const id = res.getUidsMap().get(matchedNode) as string;
 
+    console.log(res.getUidsMap().keys());
     return {
-      id,
+      id: temporaryId,
       name,
       birthdate,
       deathdate,
