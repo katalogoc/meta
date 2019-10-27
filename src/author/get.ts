@@ -11,7 +11,9 @@ export async function get(client: DgraphClient, uid: string): Promise<Author | n
           author(func: uid($id)) {
               uid
               name
-              alias
+              aliases {
+                alias
+              }
               thumbnail
               birthdate
               deathdate
@@ -31,7 +33,6 @@ export async function get(client: DgraphClient, uid: string): Promise<Author | n
 
     const json = res.getJson();
 
-    console.log(json);
     if (json.author && json.author.length) {
       const [{ uid: id, name, birthdate, deathdate, alias, thumbnail, texts }] = json.author;
 
@@ -40,14 +41,14 @@ export async function get(client: DgraphClient, uid: string): Promise<Author | n
         name: name || null,
         birthdate: birthdate || null,
         deathdate: deathdate || null,
-        aliases: [alias] || [],
+        aliases: alias ? [alias] : [],
         thumbnail: thumbnail || null,
         texts: texts || [],
       };
     }
     return null;
   } catch (err) {
-    logger.error(`Couldn't get a text with uid: ${uid}, error: ${err}`);
+    logger.error(`Couldn't get an author with uid: ${uid}, error: ${err}`);
 
     throw err;
   }

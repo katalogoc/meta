@@ -16,8 +16,9 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
   const uid = blankNodeId(temporaryId);
 
   const aliasObjects = aliases.map((alias: string) => ({
-    uid,
+    uid: blankNodeId(alias),
     alias,
+    'dgraph.type': 'Alias',
   }));
 
   const texts: Text[] = [];
@@ -56,7 +57,7 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
       aliases,
     };
   } catch (err) {
-    logger.error(`Couldn't upsert a text, error: ${err}`);
+    logger.error(`Couldn't upsert an author, error: ${err}`);
 
     throw err;
   }
