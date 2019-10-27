@@ -3,12 +3,14 @@ import apollo from './apollo';
 import createLogger from 'hyped-logger';
 import loggerWinston from 'koa-logger-winston';
 import bodyParser from 'koa-bodyparser';
+import handleErrors from './common/handleErrors';
 
 const logger = createLogger();
 
 const middlewares = [
   loggerWinston(logger),
-  bodyParser()
+  bodyParser(),
+  handleErrors,
 ];
 
 const app = new Koa();

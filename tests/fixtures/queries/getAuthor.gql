@@ -1,0 +1,10 @@
+query getAuthor($id: ID!) {
+  author(id: $id) {
+    id
+    birthdate
+    deathdate
+    name
+    aliases
+    thumbnail
+  }
+}

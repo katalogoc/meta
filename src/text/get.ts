@@ -1,7 +1,7 @@
-import { DgraphClient, Mutation } from 'dgraph-js';
+import { DgraphClient } from 'dgraph-js';
 import createLogger from 'hyped-logger';
 import _ from 'lodash';
-import { Text } from '../../types';
+import { Text } from '../common/types';
 
 const logger = createLogger();
 
@@ -29,13 +29,15 @@ export async function byUid(client: DgraphClient, uid: string): Promise<Text> {
 
     const json = res.getJson() || null;
 
-    return json && {
-      id: uid,
-      title: json.title || null,
-      url: json.url || null,
-      authors: [],
-      subject: [],
-    };
+    return (
+      json && {
+        id: uid,
+        title: json.title || null,
+        url: json.url || null,
+        authors: [],
+        subject: [],
+      }
+    );
   } catch (err) {
     logger.error(`Couldn't get a text with uid: ${uid}, error: ${err}`);
 

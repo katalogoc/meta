@@ -1,20 +1,26 @@
 import { ApolloServer } from 'apollo-server-koa';
-import typeDefs from './schema';
+import path from 'path';
+import { importSchema } from 'graphql-import';
+import { makeExecutableSchema } from 'graphql-tools';
 import config from './config';
 import resolvers from './resolvers';
-import { createServiceForClient } from './services/metadataService';
-import { createClient } from './db';
-import GraphStore from './dataSources/GraphStore';
+import { createClient } from './common/db';
+import { AuthorAPI } from './author';
+import { TextAPI } from './text';
+
+const typeDefs = importSchema(path.join(__dirname, 'schema.graphql'));
 
 const dbClient = createClient();
 
 dbClient.setDebugMode(config.get('DGRAPH_DEBUG_MODE'));
 
+const schema = makeExecutableSchema({ typeDefs, resolvers });
+
 export default new ApolloServer({
-  typeDefs,
-  resolvers,
+  schema,
   dataSources: () => ({
-    graphStore: new GraphStore(createServiceForClient(dbClient)),
+    textAPI: new TextAPI(dbClient),
+    authorAPI: new AuthorAPI(dbClient),
   }),
   cacheControl: true,
   engine: {

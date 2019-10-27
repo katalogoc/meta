@@ -1,55 +1,49 @@
 import { createTestClient } from 'apollo-server-testing';
 import server from '../../src/apollo';
-import { init, createClient, dropGraphAndSchema } from '../../src/db';
+import { SAVE_TEXT } from '../fixtures/queries';
+import fixtures from '../fixtures/inputs/saveText';
+import { prepareDb } from '../prepareDb';
 
 const { mutate } = createTestClient(server) as any;
 
-const client = createClient();
-
-const SAVE_TEXT = `
-    mutation saveText($text: SaveTextInput!) {
-        saveText(text: $text) {
-            id
-            url
-            title
-            authors {
-                name
-            }
-                subject
-            }
-    }
-`;
-
 describe('mutations/saveText', () => {
-    beforeAll(async () => {
-        await dropGraphAndSchema(client);
+  beforeAll(async () => {
+    await prepareDb();
+  });
 
-        await init(client);
+  test(`creates a new text if it doesn't exist yet`, async () => {
+    const text = fixtures['hawaiian-language'];
+
+    const {
+      data: { saveText },
+    } = await mutate({
+      mutation: SAVE_TEXT,
+      variables: {
+        text,
+      },
     });
+    expect(typeof saveText.id).toBe('string');
+    expect(saveText.title).toBe(text.title);
+    expect(saveText.url).toBe(text.url);
+    expect(saveText.subject).toEqual(text.subject);
+    expect(saveText.authors).toEqual([]);
+  });
 
-    test('saves a new text without an author', async () => {
-        const title = 'Hawaiian language';
+  test(`creates a new text with one author`, async () => {
+    const text = fixtures['cooking-salads'];
 
-        const url = 'https://hawaiian-language-handbook.com/book';
-
-        const subject = ['linguistics', 'polynesian languages'];
-
-        const { data: { saveText } } = await mutate({
-            mutation: SAVE_TEXT,
-            variables: {
-                text: {
-                    title,
-                    url,
-                    subject,
-                },
-            },
-        });
-
-        expect(typeof saveText.id).toBe('string');
-        expect(saveText.id).toBeTruthy();
-        expect(saveText.title).toBe(title);
-        expect(saveText.url).toBe(url);
-        expect(saveText.subject).toEqual(subject);
-        expect(saveText.authors).toEqual([]);
+    const {
+      data: { saveText },
+    } = await mutate({
+      mutation: SAVE_TEXT,
+      variables: {
+        text,
+      },
     });
+    expect(typeof saveText.id).toBe('string');
+    expect(saveText.title).toBe(text.title);
+    expect(saveText.url).toBe(text.url);
+    expect(saveText.subject).toEqual(text.subject);
+    expect(saveText.authors).toEqual([]);
+  });
 });

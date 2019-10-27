@@ -1,12 +1,14 @@
 import { DgraphClient, Mutation, Request } from 'dgraph-js';
 import createLogger from 'hyped-logger';
 import _ from 'lodash';
-import { blankNodeId } from '../../util';
-import { Text } from '../../types';
+import { blankNodeId } from '../common/util';
+import { SaveTextInput, Text } from '../common/types';
 
 const logger = createLogger();
 
-export async function upsertText(client: DgraphClient, { title, url, subject, ...text }: Text): Promise<Text> {
+export async function upsert(client: DgraphClient, text: SaveTextInput): Promise<Text> {
+  const { title, url, subject, authors } = text;
+
   const mutation = new Mutation();
 
   const temporaryId = text.id || title || url;
@@ -17,11 +19,20 @@ export async function upsertText(client: DgraphClient, { title, url, subject, ..
     uid: blankNodeId(s),
   }));
 
+  const authorObjects = authors.map((a: any) => ({
+    uid: blankNodeId(a.id || a.name),
+    name: a.name,
+    birthdate: a.birthdate,
+    deathdate: a.deathdate,
+    thumbnail: a.thumbnail,
+  }));
+
   mutation.setSetJson({
     uid,
     title,
     url,
-    'subject': subjectObjects,
+    authors: authorObjects,
+    subject: subjectObjects,
     'dgraph.type': 'Text',
   });
 

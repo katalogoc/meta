@@ -2,7 +2,7 @@
     "extends": "./tsconfig.json",
     "include": [
         "**/__tests__/**/*",
-        "src/typings.d.ts"
+        "src/common/modules.d.ts"
     ],
     "compilerOptions": {
         "noEmit": true,

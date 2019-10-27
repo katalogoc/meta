@@ -1,0 +1,10 @@
+mutation saveAuthor($author: SaveAuthorInput!) {
+  saveAuthor(author: $author) {
+    id
+    birthdate
+    deathdate
+    name
+    aliases
+    thumbnail
+  }
+}

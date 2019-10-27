@@ -1,5 +1,5 @@
 import createLogger from 'hyped-logger';
-import { QueryOptions } from '../types';
+import { QueryOptions } from './types';
 
 const logger = createLogger();
 

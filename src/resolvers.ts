@@ -1,31 +1,20 @@
-import { Text } from './types';
+import { SaveAuthorInput, SaveTextInput } from './common/types';
 
 export default {
   Query: {
     async author(_: any, { id }: any, { dataSources }: any) {
-      return dataSources.DBpedia.getAuthorByWikiUrl(id);
+      return dataSources.authorAPI.get(id);
     },
     async texts(_: any, { options }: any, { dataSources }: any) {
       return dataSources.gutenberg.getAllTexts(options);
     },
   },
   Mutation: {
-    async saveText(_: any, { text }: { text: Text }, { dataSources }: any) {
-      return dataSources.graphStore.upsertText(text);
+    async saveText(_: any, { text }: { text: SaveTextInput }, { dataSources }: any) {
+      return dataSources.textAPI.upsert(text);
     },
-  },
-  Author: {
-    async texts(author: any, { name }: any, { dataSources }: any) {
-      return dataSources.gutenberg.getAuthorBooks(author.id);
-    },
-  },
-  Text: {
-    async authors(text: Text, _: any, { dataSources }: any) {
-      const authors = await Promise.all(
-        (text.authors || []).map((authorWikiUrl: any) => dataSources.DBpedia.getAuthorByWikiUrl(authorWikiUrl))
-      );
-
-      return authors.filter(Boolean);
+    async saveAuthor(_: any, { author }: { author: SaveAuthorInput }, { dataSources }: any) {
+      return dataSources.authorAPI.upsert(author);
     },
   },
 };

@@ -3,7 +3,7 @@
     "**/*.ts"
   ],
   "ext": "ts",
-  "exec": "ts-node  --files --project tsconfig.json src/bin/server.ts",
+  "exec": "ts-node  --files --project tsconfig.json src/run.ts",
   "verbose": false,
   "ignore": [
     ".git",

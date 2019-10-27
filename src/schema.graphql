@@ -1,0 +1,52 @@
+input QueryOptions {
+  limit: Int = 100
+  offset: Int = 0
+}
+
+type Author {
+  id: ID
+  birthdate: String
+  deathdate: String
+  name: String
+  aliases: [String!]!
+  texts: [Text!]!
+  thumbnail: String
+}
+
+type Text {
+  id: ID!
+  url: String!
+  title: String
+  authors: [Author!]
+  subject: [String!]
+}
+
+type Query {
+  author(id: ID!): Author
+  authors(options: QueryOptions): [Author]!
+  texts(options: QueryOptions): [Text]!
+  text(id: ID!): Text
+}
+
+input SaveAuthorInput {
+  id: ID
+  name: String
+  aliases: [String!]!
+  texts: [String!]!
+  birthdate: String
+  deathdate: String
+  thumbnail: String
+}
+
+input SaveTextInput {
+  id: ID
+  title: String
+  url: String!
+  authors: [String!]!
+  subject: [String!]!
+}
+
+type Mutation {
+  saveText(text: SaveTextInput!): Text!
+  saveAuthor(author: SaveAuthorInput!): Author!
+}
