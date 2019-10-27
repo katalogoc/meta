@@ -24,7 +24,7 @@ describe('mutations/saveAuthor', () => {
     });
     expect(typeof saveAuthor.id).toBe('string');
     expect(saveAuthor.name).toBe(author.name);
-    expect(saveAuthor.aliases).toEqual(author.aliases);
+    expect(saveAuthor.alias).toEqual(author.alias);
     expect(saveAuthor.thumbnail).toBe(author.thumbnail);
     expect(saveAuthor.birthdate).toBe(author.birthdate);
     expect(saveAuthor.deathdate).toBe(author.deathdate);

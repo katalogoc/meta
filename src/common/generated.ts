@@ -16,8 +16,8 @@ export type Author = {
   birthdate?: Maybe<Scalars['String']>,
   deathdate?: Maybe<Scalars['String']>,
   name?: Maybe<Scalars['String']>,
-  aliases: Array<Scalars['String']>,
-  texts?: Maybe<Array<Text>>,
+  alias: Array<Scalars['String']>,
+  texts: Array<Text>,
   thumbnail?: Maybe<Scalars['String']>,
 };
 
@@ -40,8 +40,8 @@ export type MutationSaveAuthorArgs = {
 export type Query = {
    __typename?: 'Query',
   author?: Maybe<Author>,
-  authors: Array<Maybe<Author>>,
-  texts: Array<Maybe<Text>>,
+  authors: Array<Author>,
+  texts: Array<Text>,
   text?: Maybe<Text>,
 };
 
@@ -73,7 +73,7 @@ export type QueryOptions = {
 export type SaveAuthorInput = {
   id?: Maybe<Scalars['ID']>,
   name?: Maybe<Scalars['String']>,
-  aliases: Array<Scalars['String']>,
+  alias: Array<Scalars['String']>,
   texts: Array<Scalars['String']>,
   birthdate?: Maybe<Scalars['String']>,
   deathdate?: Maybe<Scalars['String']>,
@@ -201,8 +201,8 @@ export type AuthorResolvers<ContextType = any, ParentType extends ResolversParen
   birthdate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   deathdate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  aliases?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>,
-  texts?: Resolver<Maybe<Array<ResolversTypes['Text']>>, ParentType, ContextType>,
+  alias?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>,
+  texts?: Resolver<Array<ResolversTypes['Text']>, ParentType, ContextType>,
   thumbnail?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
 };
 
@@ -213,8 +213,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   author?: Resolver<Maybe<ResolversTypes['Author']>, ParentType, ContextType, RequireFields<QueryAuthorArgs, 'id'>>,
-  authors?: Resolver<Array<Maybe<ResolversTypes['Author']>>, ParentType, ContextType, QueryAuthorsArgs>,
-  texts?: Resolver<Array<Maybe<ResolversTypes['Text']>>, ParentType, ContextType, QueryTextsArgs>,
+  authors?: Resolver<Array<ResolversTypes['Author']>, ParentType, ContextType, QueryAuthorsArgs>,
+  texts?: Resolver<Array<ResolversTypes['Text']>, ParentType, ContextType, QueryTextsArgs>,
   text?: Resolver<Maybe<ResolversTypes['Text']>, ParentType, ContextType, RequireFields<QueryTextArgs, 'id'>>,
 };
 

@@ -4,7 +4,7 @@ mutation saveAuthor($author: SaveAuthorInput!) {
     birthdate
     deathdate
     name
-    aliases
+    alias
     thumbnail
   }
 }

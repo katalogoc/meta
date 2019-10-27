@@ -3,7 +3,10 @@ import { SaveAuthorInput, SaveTextInput } from './common/types';
 export default {
   Query: {
     async author(_: any, { id }: any, { dataSources }: any) {
-      return dataSources.authorAPI.get(id);
+      return dataSources.authorAPI.getById(id);
+    },
+    async authors(_: any, { id }: any, { dataSources }: any) {
+      return dataSources.authorAPI.getAll(id);
     },
     async texts(_: any, { options }: any, { dataSources }: any) {
       return dataSources.gutenberg.getAllTexts(options);

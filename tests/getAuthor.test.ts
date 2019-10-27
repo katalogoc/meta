@@ -25,6 +25,8 @@ describe('mutations/getAuthor', () => {
       },
     });
 
+    expect(typeof id).toBe('string');
+
     const {
       data: { author },
     } = await query({
@@ -37,7 +39,7 @@ describe('mutations/getAuthor', () => {
     expect(author.birthdate).toBe(johnDoe.birthdate);
     expect(author.deathdate).toBe(johnDoe.deathdate);
     expect(author.name).toBe(johnDoe.name);
-    expect(author.aliases.sort()).toEqual(johnDoe.aliases.sort());
+    expect(author.alias.sort()).toEqual(johnDoe.alias.sort());
     expect(author.thumbnail).toEqual(johnDoe.thumbnail);
   });
 

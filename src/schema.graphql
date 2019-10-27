@@ -8,7 +8,7 @@ type Author {
   birthdate: String
   deathdate: String
   name: String
-  aliases: [String!]!
+  alias: [String!]!
   texts: [Text!]!
   thumbnail: String
 }
@@ -23,15 +23,15 @@ type Text {
 
 type Query {
   author(id: ID!): Author
-  authors(options: QueryOptions): [Author]!
-  texts(options: QueryOptions): [Text]!
+  authors(options: QueryOptions): [Author!]!
+  texts(options: QueryOptions): [Text!]!
   text(id: ID!): Text
 }
 
 input SaveAuthorInput {
   id: ID
   name: String
-  aliases: [String!]!
+  alias: [String!]!
   texts: [String!]!
   birthdate: String
   deathdate: String
