@@ -1,10 +1,7 @@
 {
-    "extends": "./tsconfig.json",
-    "include": [
-        "**/__tests__/**/*",
-        "src/common/modules.d.ts"
-    ],
-    "compilerOptions": {
-        "noEmit": true,
-    }
+  "extends": "./tsconfig.json",
+  "include": ["src/common/modules.d.ts"],
+  "compilerOptions": {
+    "noEmit": true
+  }
 }

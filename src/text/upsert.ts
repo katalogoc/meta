@@ -33,7 +33,7 @@ export async function upsert(client: DgraphClient, text: SaveTextInput): Promise
     url,
     authors: authorObjects,
     subject: subjectObjects,
-    'dgraph.type': 'Text',
+    ['dgraph.type']: 'Text',
   });
 
   const req = new Request();

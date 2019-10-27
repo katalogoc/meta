@@ -1,8 +1,8 @@
 import { createTestClient } from 'apollo-server-testing';
-import server from '../../src/apollo';
-import { SAVE_AUTHOR } from '../fixtures/queries';
-import fixtures from '../fixtures/inputs/saveAuthor';
-import { prepareDb } from '../prepareDb';
+import server from '../src/apollo';
+import { SAVE_AUTHOR } from './fixtures/queries';
+import fixtures from './fixtures/inputs/saveAuthor';
+import { prepareDb } from './helpers/prepareDb';
 
 const { mutate } = createTestClient(server) as any;
 

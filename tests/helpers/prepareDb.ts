@@ -1,4 +1,4 @@
-import { init, createClient, dropGraphAndSchema } from '../src/common/db';
+import { init, createClient, dropGraphAndSchema } from '../../src/common/db';
 
 let initialized = false;
 

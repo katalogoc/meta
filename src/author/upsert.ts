@@ -15,10 +15,13 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
 
   const uid = blankNodeId(temporaryId);
 
-  const aliasObjects = aliases.map((alias: string) => ({
-    uid: blankNodeId(alias),
-    alias,
-    'dgraph.type': 'Alias',
+  const aliasObjects = aliases.map((value: string) => ({
+    uid,
+    alias: {
+      value,
+      uid: blankNodeId(value),
+      ['dgraph.type']: 'Alias',
+    },
   }));
 
   const texts: Text[] = [];
@@ -31,7 +34,7 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
       deathdate,
       thumbnail,
       texts,
-      'dgraph.type': 'Author',
+      ['dgraph.type']: 'Author',
     },
     ...aliasObjects,
   ]);

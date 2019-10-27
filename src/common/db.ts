@@ -7,15 +7,15 @@ const logger = createLogger();
 
 export const schema = `
   type Alias {
-    alias: string
+    value: string
   }
 
   type Author {
-    deathdate: string
-    birthdate: string
+    deathdate: dateTime
+    birthdate: dateTime
     name: string
-    aliases: [Alias]
-    texts: [Text]
+    alias: [Alias]
+    texts: [uid]
     thumbnail: string
   }
 
@@ -35,10 +35,6 @@ export const schema = `
   url: string @index(exact) .
 
   title: string @index(exact) .
-
-  alias: string @index(exact) .
-
-  aliases: uid @reverse .
 `;
 
 export function createClient() {
