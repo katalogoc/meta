@@ -1,11 +1,5 @@
-import { Author, Text } from '../common/types';
+import { Author } from '../common/types';
 
-export interface AliasNode {
+export type AuthorNode = Partial<Author> & {
   uid: string;
-  value: string;
-}
-
-export type AuthorNode = Partial<Omit<Author, 'alias'>> & {
-  uid: string;
-  alias: AliasNode[];
 };

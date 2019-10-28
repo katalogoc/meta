@@ -15,7 +15,7 @@ type Author {
 
 type Text {
   id: ID!
-  url: String!
+  url: String
   title: String
   authors: [Author!]
   subject: [String!]
@@ -47,6 +47,6 @@ input SaveTextInput {
 }
 
 type Mutation {
-  saveText(text: SaveTextInput!): Text!
-  saveAuthor(author: SaveAuthorInput!): Author!
+  saveText(text: SaveTextInput!): ID!
+  saveAuthor(author: SaveAuthorInput!): ID!
 }

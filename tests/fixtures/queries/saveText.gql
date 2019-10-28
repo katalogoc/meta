@@ -1,11 +1,3 @@
 mutation saveText($text: SaveTextInput!) {
-  saveText(text: $text) {
-    id
-    url
-    title
-    subject
-    authors {
-      name
-    }
-  }
+  saveText(text: $text)
 }

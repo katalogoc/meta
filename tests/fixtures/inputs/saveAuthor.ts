@@ -37,6 +37,15 @@ const authors: HashMap<SaveAuthorInput> = {
     deathdate: null,
     texts: [],
   },
+  ['dee-doe']: {
+    id: null,
+    name: 'Dee Doe',
+    alias: ['Ding', 'Dee', 'Dong'],
+    thumbnail: 'https://facebook.com/ding/dong.jpg',
+    birthdate: '1985-01-01T00:00:00.092Z',
+    deathdate: null,
+    texts: [],
+  },
 };
 
 export default authors;

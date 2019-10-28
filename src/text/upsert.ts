@@ -1,40 +1,39 @@
 import { DgraphClient, Mutation, Request, ERR_ABORTED } from 'dgraph-js';
 import createLogger from 'hyped-logger';
-import _ from 'lodash';
+import { getById } from './getById';
 import { blankNodeId } from '../common/util';
 import { SaveTextInput, Text } from '../common/types';
 
 const logger = createLogger();
 
-export async function upsert(client: DgraphClient, text: SaveTextInput): Promise<Text> {
+export async function upsert(client: DgraphClient, text: SaveTextInput): Promise<string> {
   const { title, url, subject, authors } = text;
 
   const mutation = new Mutation();
 
-  const temporaryId = text.id || title || url;
+  const fromDb: Text | null = text.id ? await getById(client, text.id).catch(() => null) : null;
 
-  const uid = blankNodeId(temporaryId);
+  const blankNodeName = 'text';
 
-  const subjectObjects = subject.map((s: string) => ({
-    uid: blankNodeId(s),
-  }));
+  const uid: string = fromDb ? (fromDb.id as string) : blankNodeId(blankNodeName);
 
-  const authorObjects = authors.map((a: any) => ({
-    uid: blankNodeId(a.id || a.name),
-    name: a.name,
-    birthdate: a.birthdate,
-    deathdate: a.deathdate,
-    thumbnail: a.thumbnail,
-  }));
-
-  mutation.setSetJson({
+  const authorObjects = authors.map((authorUid: string) => ({
     uid,
-    title,
-    url,
-    authors: authorObjects,
-    subject: subjectObjects,
-    ['dgraph.type']: 'Text',
-  });
+    authors: {
+      uid: authorUid,
+    },
+  }));
+
+  mutation.setSetJson([
+    {
+      uid,
+      title,
+      url,
+      subject,
+      ['dgraph.type']: 'Text',
+    },
+    ...authorObjects,
+  ]);
 
   const req = new Request();
 
@@ -45,17 +44,9 @@ export async function upsert(client: DgraphClient, text: SaveTextInput): Promise
   try {
     const res = await txn.doRequest(req);
 
-    const id = res.getUidsMap().get(temporaryId) as string;
-
     await txn.commit();
 
-    return {
-      id,
-      title,
-      url,
-      subject,
-      authors: [],
-    };
+    return fromDb ? fromDb.id : (res.getUidsMap().get(blankNodeName) as string);
   } catch (err) {
     if (err === ERR_ABORTED) {
       return upsert(client, text);
@@ -64,5 +55,7 @@ export async function upsert(client: DgraphClient, text: SaveTextInput): Promise
 
       throw err;
     }
+  } finally {
+    await txn.discard();
   }
 }

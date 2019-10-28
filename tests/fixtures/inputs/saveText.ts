@@ -13,6 +13,12 @@ const texts: HashMap<SaveTextInput> = {
     subject: ['cooking'],
     authors: [],
   },
+  'design-patters': {
+    title: 'Design Patterns',
+    url: 'https://en.wikipedia.org/wiki/Design_Patterns',
+    subject: ['computer programming', 'design patterns'],
+    authors: [],
+  },
 };
 
 export default texts;

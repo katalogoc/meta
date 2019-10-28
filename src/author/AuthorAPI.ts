@@ -22,7 +22,7 @@ export class AuthorAPI extends DataSource {
     return getById(this.client, id);
   }
 
-  public async upsert(author: SaveAuthorInput): Promise<Author> {
+  public async upsert(author: SaveAuthorInput): Promise<string> {
     return upsert(this.client, author);
   }
 }

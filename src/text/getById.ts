@@ -1,24 +1,25 @@
 import { DgraphClient, ERR_ABORTED } from 'dgraph-js';
 import createLogger from 'hyped-logger';
-import { Author } from '../common/types';
-import { makeAuthor } from './makeAuthor';
+import { Text } from '../common/types';
+import { makeText } from './makeText';
 
 const logger = createLogger();
 
-export async function getById(client: DgraphClient, uid: string): Promise<Author | null> {
+export async function getById(client: DgraphClient, uid: string): Promise<Text | null> {
   const query = `
-    query getAuthor($id: string) {
-      author(func: uid($id)) {
+    query getText($id: string) {
+      text(func: uid($id)) {
         uid
-        name
-        thumbnail
-        birthdate
-        deathdate
-        alias {
-          value
-        }
-        texts {
+        title
+        url
+        subject
+        authors {
           uid
+          name
+          alias
+          deathdate
+          birthdate
+          thumbnail
         }
       }
     }
@@ -35,8 +36,8 @@ export async function getById(client: DgraphClient, uid: string): Promise<Author
 
     await txn.commit();
 
-    if (json.author && json.author.length) {
-      return makeAuthor(json.author[0]);
+    if (json.text && json.text.length) {
+      return makeText(json.text[0]);
     }
 
     return null;
@@ -44,7 +45,7 @@ export async function getById(client: DgraphClient, uid: string): Promise<Author
     if (err === ERR_ABORTED) {
       return getById(client, uid);
     } else {
-      logger.error(`Couldn't get an author with uid: ${uid}, error: ${err}`);
+      logger.error(`Couldn't get a text with uid: ${uid}, error: ${err}`);
 
       throw err;
     }

@@ -1,13 +1,12 @@
 import { DgraphClient, Mutation, Request, ERR_ABORTED } from 'dgraph-js';
 import createLogger from 'hyped-logger';
-import _ from 'lodash';
 import { blankNodeId } from '../common/util';
 import { getById } from './getById';
 import { SaveAuthorInput, Author, Text } from '../common/types';
 
 const logger = createLogger();
 
-export async function upsert(client: DgraphClient, author: SaveAuthorInput): Promise<Author> {
+export async function upsert(client: DgraphClient, author: SaveAuthorInput): Promise<string> {
   const { name, alias, birthdate, deathdate, thumbnail, texts: textIds } = author;
 
   const mutation = new Mutation();
@@ -20,28 +19,19 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
 
   const req = new Request();
 
-  const aliasObjects = alias.map((value: string) => ({
-    uid,
-    alias: {
-      value,
-      uid: blankNodeId(value),
-      ['dgraph.type']: 'Alias',
-    },
-  }));
-
   const texts: Text[] = [];
 
   mutation.setSetJson([
     {
       uid,
       name,
+      alias,
       birthdate,
       deathdate,
       thumbnail,
       texts,
       ['dgraph.type']: 'Author',
     },
-    ...aliasObjects,
   ]);
 
   req.setMutationsList([mutation]);
@@ -51,21 +41,9 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
   try {
     const res = await txn.doRequest(req);
 
-    const temporaryId = fromDb ? (fromDb.id as string) : blankNodeName;
-
-    const id = res.getUidsMap().get(temporaryId) as string;
-
     await txn.commit();
 
-    return {
-      id,
-      name,
-      birthdate,
-      deathdate,
-      thumbnail,
-      texts,
-      alias,
-    };
+    return fromDb ? (fromDb.id as string) : (res.getUidsMap().get(blankNodeName) as string);
   } catch (err) {
     if (err === ERR_ABORTED) {
       return upsert(client, author);
@@ -74,5 +52,7 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
 
       throw err;
     }
+  } finally {
+    await txn.discard();
   }
 }

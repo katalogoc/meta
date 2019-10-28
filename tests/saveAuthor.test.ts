@@ -22,12 +22,8 @@ describe('mutations/saveAuthor', () => {
         author,
       },
     });
-    expect(typeof saveAuthor.id).toBe('string');
-    expect(saveAuthor.name).toBe(author.name);
-    expect(saveAuthor.alias).toEqual(author.alias);
-    expect(saveAuthor.thumbnail).toBe(author.thumbnail);
-    expect(saveAuthor.birthdate).toBe(author.birthdate);
-    expect(saveAuthor.deathdate).toBe(author.deathdate);
+    expect(typeof saveAuthor).toBe('string');
+    expect(saveAuthor.length).toBeGreaterThan(0);
   });
 
   test(`updates an author if it exists`, async () => {
@@ -40,7 +36,7 @@ describe('mutations/saveAuthor', () => {
       },
     });
 
-    const { id } = initialResponse.data.saveAuthor;
+    const id = initialResponse.data.saveAuthor;
 
     expect(id.length).toBeGreaterThan(0);
 

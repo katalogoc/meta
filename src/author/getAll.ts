@@ -1,6 +1,5 @@
 import { DgraphClient, ERR_ABORTED } from 'dgraph-js';
 import createLogger from 'hyped-logger';
-import _ from 'lodash';
 import { Author, QueryOptions } from '../common/types';
 import { makeAuthor } from './makeAuthor';
 import { AuthorNode } from './types';
@@ -9,21 +8,21 @@ const logger = createLogger();
 
 export async function getAll(client: DgraphClient, queryOptions: QueryOptions): Promise<Author[]> {
   const query = `
-      query getAuthors {
-          authors(func: type(Author)) {
-              uid
-              name
-              thumbnail
-              birthdate
-              deathdate
-              alias {
-                value
-              }
-              texts {
-                uid
-              }
-          }
+    query getAuthors {
+      authors(func: type(Author)) {
+        uid
+        name
+        thumbnail
+        birthdate
+        deathdate
+        alias {
+          value
+        }
+        texts {
+          uid
+        }
       }
+    }
   `;
 
   const txn = client.newTxn();
@@ -35,11 +34,7 @@ export async function getAll(client: DgraphClient, queryOptions: QueryOptions): 
 
     await txn.commit();
 
-    if (json.authors && json.authors.length) {
-      return json.authors.map((node: AuthorNode) => makeAuthor(node));
-    }
-
-    return [];
+    return json.authors.map((node: AuthorNode) => makeAuthor(node));
   } catch (err) {
     if (err === ERR_ABORTED) {
       return getAll(client, queryOptions);
@@ -48,5 +43,7 @@ export async function getAll(client: DgraphClient, queryOptions: QueryOptions): 
 
       throw err;
     }
+  } finally {
+    await txn.discard();
   }
 }

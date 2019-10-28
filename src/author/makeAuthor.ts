@@ -1,5 +1,5 @@
 import { Author } from '../common/types';
-import { AuthorNode, AliasNode } from './types';
+import { AuthorNode } from './types';
 
 export function makeAuthor(node: Partial<AuthorNode>): Author {
   const { uid: id, name = null, birthdate = null, deathdate = null, alias = [], thumbnail = null, texts = [] } = node;
@@ -11,6 +11,6 @@ export function makeAuthor(node: Partial<AuthorNode>): Author {
     deathdate,
     thumbnail,
     texts,
-    alias: alias.map((a: AliasNode) => a.value),
+    alias,
   };
 }

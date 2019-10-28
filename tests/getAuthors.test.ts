@@ -39,7 +39,7 @@ describe('queries/getAuthors', () => {
       query: GET_AUTHORS,
     });
 
-    const jillKill = authors.find((a: Author) => a.id === saveAuthor.id);
+    const jillKill = authors.find((a: Author) => a.id === saveAuthor);
 
     expect(jillKill).toBeDefined();
     expect(jillKill.name).toBe(author.name);

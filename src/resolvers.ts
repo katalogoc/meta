@@ -8,8 +8,11 @@ export default {
     async authors(_: any, { id }: any, { dataSources }: any) {
       return dataSources.authorAPI.getAll(id);
     },
+    async text(_: any, { id }: any, { dataSources }: any) {
+      return dataSources.textAPI.getById(id);
+    },
     async texts(_: any, { options }: any, { dataSources }: any) {
-      return dataSources.gutenberg.getAllTexts(options);
+      return dataSources.textAPI.getAll(options);
     },
   },
   Mutation: {

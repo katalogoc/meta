@@ -21,14 +21,14 @@ describe('queries/getAuthor', () => {
       },
     });
 
-    expect(mutationResponse.data.saveAuthor.id.length).toBeGreaterThan(0);
+    expect(mutationResponse.data.saveAuthor.length).toBeGreaterThan(0);
 
     const {
       data: { author },
     } = await query({
       query: GET_AUTHOR,
       variables: {
-        id: mutationResponse.data.saveAuthor.id,
+        id: mutationResponse.data.saveAuthor,
       },
     });
     expect(author.id.length).toBeGreaterThan(0);

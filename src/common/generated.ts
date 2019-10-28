@@ -23,8 +23,8 @@ export type Author = {
 
 export type Mutation = {
    __typename?: 'Mutation',
-  saveText: Text,
-  saveAuthor: Author,
+  saveText: Scalars['ID'],
+  saveAuthor: Scalars['ID'],
 };
 
 
@@ -91,7 +91,7 @@ export type SaveTextInput = {
 export type Text = {
    __typename?: 'Text',
   id: Scalars['ID'],
-  url: Scalars['String'],
+  url?: Maybe<Scalars['String']>,
   title?: Maybe<Scalars['String']>,
   authors?: Maybe<Array<Author>>,
   subject?: Maybe<Array<Scalars['String']>>,
@@ -207,8 +207,8 @@ export type AuthorResolvers<ContextType = any, ParentType extends ResolversParen
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  saveText?: Resolver<ResolversTypes['Text'], ParentType, ContextType, RequireFields<MutationSaveTextArgs, 'text'>>,
-  saveAuthor?: Resolver<ResolversTypes['Author'], ParentType, ContextType, RequireFields<MutationSaveAuthorArgs, 'author'>>,
+  saveText?: Resolver<ResolversTypes['ID'], ParentType, ContextType, RequireFields<MutationSaveTextArgs, 'text'>>,
+  saveAuthor?: Resolver<ResolversTypes['ID'], ParentType, ContextType, RequireFields<MutationSaveAuthorArgs, 'author'>>,
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
@@ -220,7 +220,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 
 export type TextResolvers<ContextType = any, ParentType extends ResolversParentTypes['Text'] = ResolversParentTypes['Text']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
-  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   authors?: Resolver<Maybe<Array<ResolversTypes['Author']>>, ParentType, ContextType>,
   subject?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>,

@@ -6,15 +6,11 @@ import config from '../config';
 const logger = createLogger();
 
 export const schema = `
-  type Alias {
-    value: string
-  }
-
   type Author {
     deathdate: dateTime
     birthdate: dateTime
     name: string
-    alias: [Alias]
+    alias: [string]
     texts: [uid]
     thumbnail: string
   }
@@ -23,11 +19,7 @@ export const schema = `
     url: string
     title: string
     authors: [Author]
-    subject: [Subject]
-  }
-
-  type Subject {
-    name: string
+    subject: [string]
   }
 
   name: string @index(exact) .
@@ -35,6 +27,10 @@ export const schema = `
   url: string @index(exact) .
 
   title: string @index(exact) .
+
+  subject: [string] .
+
+  alias: [string] .
 `;
 
 export function createClient() {
