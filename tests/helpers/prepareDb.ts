@@ -1,15 +1,16 @@
+import createLogger from 'hyped-logger';
 import { init, createClient, dropGraphAndSchema } from '../../src/common/db';
 
-let initialized = false;
+const logger = createLogger();
+
+const client = createClient();
+
+const promise = dropGraphAndSchema(client).then(() =>
+  init(client).catch((err: Error) => {
+    logger.error(`Couldn't alter the schema for the test environment, error: ${err}`);
+  })
+);
 
 export async function prepareDb() {
-  if (!initialized) {
-    const client = createClient();
-
-    await dropGraphAndSchema(client);
-
-    await init(client);
-  }
-
-  initialized = true;
+  return promise;
 }

@@ -6,7 +6,7 @@ import { prepareDb } from './helpers/prepareDb';
 
 const { query, mutate } = createTestClient(server) as any;
 
-describe('mutations/getAuthor', () => {
+describe('queries/getAuthor', () => {
   beforeAll(async () => {
     await prepareDb();
   });
@@ -14,25 +14,21 @@ describe('mutations/getAuthor', () => {
   test(`gets an author if it exists`, async () => {
     const realBill = fixtures['real-bill'];
 
-    const {
-      data: {
-        saveAuthor: { id },
-      },
-    } = await mutate({
+    const mutationResponse = await mutate({
       mutation: SAVE_AUTHOR,
       variables: {
         author: realBill,
       },
     });
 
-    expect(id.length).toBeGreaterThan(0);
+    expect(mutationResponse.data.saveAuthor.id.length).toBeGreaterThan(0);
 
     const {
       data: { author },
     } = await query({
       query: GET_AUTHOR,
       variables: {
-        id,
+        id: mutationResponse.data.saveAuthor.id,
       },
     });
     expect(author.id.length).toBeGreaterThan(0);

@@ -1,4 +1,4 @@
-import { DgraphClient } from 'dgraph-js';
+import { DgraphClient, ERR_ABORTED } from 'dgraph-js';
 import createLogger from 'hyped-logger';
 import _ from 'lodash';
 import { Author } from '../common/types';
@@ -34,13 +34,20 @@ export async function getById(client: DgraphClient, uid: string): Promise<Author
 
     const json = res.getJson();
 
+    await txn.commit();
+
     if (json.author && json.author.length) {
       return makeAuthor(json.author[0]);
     }
+
     return null;
   } catch (err) {
-    logger.error(`Couldn't get an author with uid: ${uid}, error: ${err}`);
+    if (err === ERR_ABORTED) {
+      return getById(client, uid);
+    } else {
+      logger.error(`Couldn't get an author with uid: ${uid}, error: ${err}`);
 
-    throw err;
+      throw err;
+    }
   }
 }

@@ -29,6 +29,8 @@ export async function byUid(client: DgraphClient, uid: string): Promise<Text> {
 
     const json = res.getJson() || null;
 
+    await txn.commit();
+
     return (
       json && {
         id: uid,
@@ -42,5 +44,7 @@ export async function byUid(client: DgraphClient, uid: string): Promise<Text> {
     logger.error(`Couldn't get a text with uid: ${uid}, error: ${err}`);
 
     throw err;
+  } finally {
+    await txn.discard();
   }
 }

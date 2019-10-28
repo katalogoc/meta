@@ -28,6 +28,15 @@ const authors: HashMap<SaveAuthorInput> = {
     deathdate: null,
     texts: [],
   },
+  ['jill-kill']: {
+    id: null,
+    name: 'Jill Kill',
+    alias: ['Jelly'],
+    thumbnail: 'https://facebook.com/jelly/avatar.jpg',
+    birthdate: '1990-10-21T00:00:00.092Z',
+    deathdate: null,
+    texts: [],
+  },
 };
 
 export default authors;

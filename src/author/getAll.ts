@@ -1,4 +1,4 @@
-import { DgraphClient } from 'dgraph-js';
+import { DgraphClient, ERR_ABORTED } from 'dgraph-js';
 import createLogger from 'hyped-logger';
 import _ from 'lodash';
 import { Author, QueryOptions } from '../common/types';
@@ -33,13 +33,20 @@ export async function getAll(client: DgraphClient, queryOptions: QueryOptions): 
 
     const json = res.getJson();
 
+    await txn.commit();
+
     if (json.authors && json.authors.length) {
       return json.authors.map((node: AuthorNode) => makeAuthor(node));
     }
+
     return [];
   } catch (err) {
-    logger.error(`Couldn't get authors, error: ${err}`);
+    if (err === ERR_ABORTED) {
+      return getAll(client, queryOptions);
+    } else {
+      logger.error(`Couldn't get authors, error: ${err}`);
 
-    throw err;
+      throw err;
+    }
   }
 }

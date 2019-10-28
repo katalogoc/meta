@@ -1,0 +1,11 @@
+query getAuthors($options: QueryOptions) {
+  authors(options: $options) {
+    id
+    birthdate
+    deathdate
+    name
+    alias
+    thumbnail
+    __typename
+  }
+}

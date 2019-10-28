@@ -1,4 +1,4 @@
-import { DgraphClient, Mutation, Request } from 'dgraph-js';
+import { DgraphClient, Mutation, Request, ERR_ABORTED } from 'dgraph-js';
 import createLogger from 'hyped-logger';
 import _ from 'lodash';
 import { blankNodeId } from '../common/util';
@@ -46,14 +46,16 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
 
   req.setMutationsList([mutation]);
 
-  req.setCommitNow(true);
+  const txn = client.newTxn();
 
   try {
-    const res = await client.newTxn().doRequest(req);
+    const res = await txn.doRequest(req);
 
     const temporaryId = fromDb ? (fromDb.id as string) : blankNodeName;
 
     const id = res.getUidsMap().get(temporaryId) as string;
+
+    await txn.commit();
 
     return {
       id,
@@ -65,8 +67,12 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
       alias,
     };
   } catch (err) {
-    logger.error(`Couldn't upsert an author, error: ${err}`);
+    if (err === ERR_ABORTED) {
+      return upsert(client, author);
+    } else {
+      logger.error(`Couldn't upsert an author, error: ${err}`);
 
-    throw err;
+      throw err;
+    }
   }
 }

@@ -40,6 +40,7 @@ describe('mutations/saveText', () => {
         text,
       },
     });
+
     expect(typeof saveText.id).toBe('string');
     expect(saveText.title).toBe(text.title);
     expect(saveText.url).toBe(text.url);
