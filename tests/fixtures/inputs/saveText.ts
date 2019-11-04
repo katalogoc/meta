@@ -19,6 +19,18 @@ const texts: HashMap<SaveTextInput> = {
     subject: ['computer programming', 'design patterns'],
     authors: [],
   },
+  'mein-kampf': {
+    title: 'Mein Kampf',
+    url: 'https://en.wikipedia.org/wiki/Mein_Kampf',
+    subject: ['nazism'],
+    authors: [],
+  },
+  'around-the-world-in-80-days': {
+    title: 'Around the World in 80 Days',
+    url: 'https://en.wikipedia.org/wiki/Around_the_World_in_Eighty_Days',
+    subject: ['adventures'],
+    authors: [],
+  },
 };
 
 export default texts;

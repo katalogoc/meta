@@ -46,6 +46,15 @@ const authors: HashMap<SaveAuthorInput> = {
     deathdate: null,
     texts: [],
   },
+  ['jules-verne']: {
+    id: null,
+    name: 'Jules Verne',
+    alias: ['Jules Gabriel Verne'],
+    thumbnail: 'https://en.wikipedia.org/wiki/Jules_Verne#/media/File:Jules_Verne_by_%C3%89tienne_Carjat.jpg',
+    birthdate: '1828-02-08T00:00:00.092Z',
+    deathdate: '1905-03-24T00:00:00.092Z',
+    texts: [],
+  },
 };
 
 export default authors;

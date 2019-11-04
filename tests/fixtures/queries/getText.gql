@@ -1,0 +1,16 @@
+query getText($id: ID!) {
+  text(id: $id) {
+    id
+    title
+    url
+    subject
+    authors {
+      id
+      name
+      birthdate
+      deathdate
+      thumbnail
+      alias
+    }
+  }
+}
