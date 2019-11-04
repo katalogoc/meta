@@ -8,7 +8,7 @@ const logger = createLogger();
 export async function getById(client: DgraphClient, uid: string): Promise<Author | null> {
   const query = `
     query getAuthor($id: string) {
-      author(func: uid($id)) {
+      author(func: uid($id)) @filter(type(Author)) {
         uid
         name
         thumbnail
