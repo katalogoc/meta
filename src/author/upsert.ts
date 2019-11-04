@@ -21,6 +21,11 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
 
   const texts: Text[] = [];
 
+  const aliasObjects = alias.map((alias: string) => ({
+    uid,
+    alias,
+  }));
+
   mutation.setSetJson([
     {
       uid,
@@ -32,6 +37,7 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
       texts,
       ['dgraph.type']: 'Author',
     },
+    ...aliasObjects,
   ]);
 
   req.setMutationsList([mutation]);

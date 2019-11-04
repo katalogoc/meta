@@ -12,6 +12,10 @@ describe('mutations/saveText', () => {
     await prepareDb();
   });
 
+  afterAll(async () => {
+    await prepareDb();
+  });
+
   test(`creates a new text if it doesn't exist yet`, async () => {
     const text = texts['hawaiian-language'];
 
@@ -67,8 +71,6 @@ describe('mutations/saveText', () => {
         text,
       },
     });
-
-    console.log('ID', id);
 
     const newUrl = 'https://design-patterns.com/Design_Patterns.epub';
 

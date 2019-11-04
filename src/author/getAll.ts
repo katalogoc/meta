@@ -15,9 +15,7 @@ export async function getAll(client: DgraphClient, queryOptions: QueryOptions): 
         thumbnail
         birthdate
         deathdate
-        alias {
-          value
-        }
+        alias
         texts {
           uid
         }

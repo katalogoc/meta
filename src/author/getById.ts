@@ -14,9 +14,7 @@ export async function getById(client: DgraphClient, uid: string): Promise<Author
         thumbnail
         birthdate
         deathdate
-        alias {
-          value
-        }
+        alias
         texts {
           uid
         }
