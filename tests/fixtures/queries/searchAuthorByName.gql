@@ -1,0 +1,13 @@
+query getAuthorByName($name: String) {
+  searchAuthorByName(name: $name) {
+    id
+    name
+    alias
+    birthdate
+    deathdate
+    thumbnail
+    texts {
+      id
+    }
+  }
+}

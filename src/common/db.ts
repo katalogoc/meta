@@ -11,7 +11,6 @@ export const schema = `
     birthdate: dateTime
     name: string
     alias: [string]
-    texts: [uid]
     thumbnail: string
   }
 
@@ -30,7 +29,9 @@ export const schema = `
 
   subject: [string] .
 
-  alias: [string] .
+  alias: [string] @index(term).
+
+  authors: [uid] @reverse @count .
 `;
 
 export function createClient() {

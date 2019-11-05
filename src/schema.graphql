@@ -23,6 +23,7 @@ type Text {
 
 type Query {
   author(id: ID!): Author
+  searchAuthorByName(name: String): Author
   authors(options: QueryOptions): [Author!]!
   texts(options: QueryOptions): [Text!]!
   text(id: ID!): Text

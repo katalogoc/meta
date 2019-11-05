@@ -6,6 +6,11 @@ query getAuthors($options: QueryOptions) {
     name
     alias
     thumbnail
-    __typename
+    texts {
+      id
+      title
+      url
+      subject
+    }
   }
 }

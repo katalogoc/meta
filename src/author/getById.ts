@@ -15,8 +15,11 @@ export async function getById(client: DgraphClient, uid: string): Promise<Author
         birthdate
         deathdate
         alias
-        texts {
+        texts: ~authors {
           uid
+          title
+          url
+          subject
         }
       }
     }
