@@ -7,7 +7,7 @@ import { SaveAuthorInput, Author, Text } from '../common/types';
 const logger = createLogger();
 
 export async function upsert(client: DgraphClient, author: SaveAuthorInput): Promise<string> {
-  const { name, alias, birthdate, deathdate, thumbnail, texts: textIds } = author;
+  const { name, alias, birthdate, deathdate, thumbnail, xid = null, source = null } = author;
 
   const mutation = new Mutation();
 
@@ -21,14 +21,16 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
 
   const texts: Text[] = [];
 
-  const aliasObjects = alias.map((alias: string) => ({
+  const aliasObjects = alias.map((a: string) => ({
     uid,
-    alias,
+    alias: a,
   }));
 
   mutation.setSetJson([
     {
       uid,
+      xid,
+      source,
       name,
       alias,
       birthdate,

@@ -32,6 +32,8 @@ describe('queries/getAuthor', () => {
       },
     });
     expect(author.id.length).toBeGreaterThan(0);
+    expect(author.xid).toBe(realBill.xid);
+    expect(author.source).toBe(realBill.source);
     expect(author.birthdate).toBe(realBill.birthdate);
     expect(author.deathdate).toBe(realBill.deathdate);
     expect(author.name).toBe(realBill.name);

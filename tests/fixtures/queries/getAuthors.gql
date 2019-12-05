@@ -1,6 +1,8 @@
 query getAuthors($options: QueryOptions) {
   authors(options: $options) {
     id
+    xid
+    source
     birthdate
     deathdate
     name
@@ -8,9 +10,12 @@ query getAuthors($options: QueryOptions) {
     thumbnail
     texts {
       id
+      xid
+      source
       title
       url
       subject
     }
+    __typename
   }
 }

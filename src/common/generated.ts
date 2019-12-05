@@ -13,6 +13,8 @@ export type Scalars = {
 export type Author = {
    __typename?: 'Author',
   id?: Maybe<Scalars['ID']>,
+  xid?: Maybe<Scalars['ID']>,
+  source?: Maybe<DataSource>,
   birthdate?: Maybe<Scalars['String']>,
   deathdate?: Maybe<Scalars['String']>,
   name?: Maybe<Scalars['String']>,
@@ -20,6 +22,11 @@ export type Author = {
   texts: Array<Text>,
   thumbnail?: Maybe<Scalars['String']>,
 };
+
+export enum DataSource {
+  Gutenberg = 'GUTENBERG',
+  Hyped = 'HYPED'
+}
 
 export type Mutation = {
    __typename?: 'Mutation',
@@ -40,6 +47,7 @@ export type MutationSaveAuthorArgs = {
 export type Query = {
    __typename?: 'Query',
   author?: Maybe<Author>,
+  searchAuthorByName?: Maybe<Author>,
   authors: Array<Author>,
   texts: Array<Text>,
   text?: Maybe<Text>,
@@ -48,6 +56,11 @@ export type Query = {
 
 export type QueryAuthorArgs = {
   id: Scalars['ID']
+};
+
+
+export type QuerySearchAuthorByNameArgs = {
+  name?: Maybe<Scalars['String']>
 };
 
 
@@ -72,6 +85,8 @@ export type QueryOptions = {
 
 export type SaveAuthorInput = {
   id?: Maybe<Scalars['ID']>,
+  xid?: Maybe<Scalars['ID']>,
+  source?: Maybe<DataSource>,
   name?: Maybe<Scalars['String']>,
   alias: Array<Scalars['String']>,
   texts: Array<Scalars['String']>,
@@ -82,6 +97,8 @@ export type SaveAuthorInput = {
 
 export type SaveTextInput = {
   id?: Maybe<Scalars['ID']>,
+  xid?: Maybe<Scalars['ID']>,
+  source?: Maybe<DataSource>,
   title?: Maybe<Scalars['String']>,
   url: Scalars['String'],
   authors: Array<Scalars['String']>,
@@ -91,6 +108,8 @@ export type SaveTextInput = {
 export type Text = {
    __typename?: 'Text',
   id: Scalars['ID'],
+  xid?: Maybe<Scalars['ID']>,
+  source?: Maybe<DataSource>,
   url?: Maybe<Scalars['String']>,
   title?: Maybe<Scalars['String']>,
   authors?: Maybe<Array<Author>>,
@@ -171,6 +190,7 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>,
   ID: ResolverTypeWrapper<Scalars['ID']>,
   Author: ResolverTypeWrapper<Author>,
+  DataSource: DataSource,
   String: ResolverTypeWrapper<Scalars['String']>,
   Text: ResolverTypeWrapper<Text>,
   QueryOptions: QueryOptions,
@@ -186,6 +206,7 @@ export type ResolversParentTypes = {
   Query: {},
   ID: Scalars['ID'],
   Author: Author,
+  DataSource: DataSource,
   String: Scalars['String'],
   Text: Text,
   QueryOptions: QueryOptions,
@@ -198,6 +219,8 @@ export type ResolversParentTypes = {
 
 export type AuthorResolvers<ContextType = any, ParentType extends ResolversParentTypes['Author'] = ResolversParentTypes['Author']> = {
   id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>,
+  xid?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>,
+  source?: Resolver<Maybe<ResolversTypes['DataSource']>, ParentType, ContextType>,
   birthdate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   deathdate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
@@ -213,6 +236,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   author?: Resolver<Maybe<ResolversTypes['Author']>, ParentType, ContextType, RequireFields<QueryAuthorArgs, 'id'>>,
+  searchAuthorByName?: Resolver<Maybe<ResolversTypes['Author']>, ParentType, ContextType, QuerySearchAuthorByNameArgs>,
   authors?: Resolver<Array<ResolversTypes['Author']>, ParentType, ContextType, QueryAuthorsArgs>,
   texts?: Resolver<Array<ResolversTypes['Text']>, ParentType, ContextType, QueryTextsArgs>,
   text?: Resolver<Maybe<ResolversTypes['Text']>, ParentType, ContextType, RequireFields<QueryTextArgs, 'id'>>,
@@ -220,6 +244,8 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 
 export type TextResolvers<ContextType = any, ParentType extends ResolversParentTypes['Text'] = ResolversParentTypes['Text']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  xid?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>,
+  source?: Resolver<Maybe<ResolversTypes['DataSource']>, ParentType, ContextType>,
   url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   authors?: Resolver<Maybe<Array<ResolversTypes['Author']>>, ParentType, ContextType>,

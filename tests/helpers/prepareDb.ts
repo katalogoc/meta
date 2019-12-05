@@ -5,7 +5,7 @@ const logger = createLogger();
 
 const client = createClient();
 
-const promise = dropGraphAndSchema(client).then(() =>
+const promise = Promise.resolve(client).then(() =>
   init(client).catch((err: Error) => {
     logger.error(`Couldn't alter the schema for the test environment, error: ${err}`);
   })

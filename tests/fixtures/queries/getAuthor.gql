@@ -1,6 +1,8 @@
 query getAuthor($id: ID!) {
   author(id: $id) {
     id
+    xid
+    source
     birthdate
     deathdate
     name

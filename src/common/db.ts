@@ -12,6 +12,8 @@ export const schema = `
     name: string
     alias: [string]
     thumbnail: string
+    xid: string
+    source: string
   }
 
   type Text {
@@ -19,6 +21,8 @@ export const schema = `
     title: string
     authors: [Author]
     subject: [string]
+    xid: string
+    source: string
   }
 
   name: string @index(exact) .
@@ -29,9 +33,13 @@ export const schema = `
 
   subject: [string] .
 
-  alias: [string] @index(term).
+  alias: [string] @index(term) .
 
   authors: [uid] @reverse @count .
+
+  xid: string @index(exact) .
+
+  source: string @index(exact) .
 `;
 
 export function createClient() {

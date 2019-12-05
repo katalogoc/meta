@@ -77,6 +77,8 @@ describe('queries/getText', () => {
       {
         name: 'Jules Verne',
         id: authorId,
+        xid: juleVerne.xid,
+        source: juleVerne.source,
         thumbnail: juleVerne.thumbnail,
         birthdate: juleVerne.birthdate,
         deathdate: juleVerne.deathdate,

@@ -1,11 +1,15 @@
 query getText($id: ID!) {
   text(id: $id) {
     id
+    xid
+    source
     title
     url
     subject
     authors {
       id
+      xid
+      source
       name
       birthdate
       deathdate

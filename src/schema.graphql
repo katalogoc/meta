@@ -1,3 +1,8 @@
+enum DataSource {
+  GUTENBERG
+  HYPED
+}
+
 input QueryOptions {
   limit: Int = 100
   offset: Int = 0
@@ -5,6 +10,8 @@ input QueryOptions {
 
 type Author {
   id: ID
+  xid: ID
+  source: DataSource
   birthdate: String
   deathdate: String
   name: String
@@ -15,6 +22,8 @@ type Author {
 
 type Text {
   id: ID!
+  xid: ID
+  source: DataSource
   url: String
   title: String
   authors: [Author!]
@@ -31,6 +40,8 @@ type Query {
 
 input SaveAuthorInput {
   id: ID
+  xid: ID
+  source: DataSource
   name: String
   alias: [String!]!
   texts: [String!]!
@@ -41,6 +52,8 @@ input SaveAuthorInput {
 
 input SaveTextInput {
   id: ID
+  xid: ID
+  source: DataSource
   title: String
   url: String!
   authors: [String!]!

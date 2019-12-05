@@ -1,6 +1,8 @@
 query getAuthorByName($name: String) {
   searchAuthorByName(name: $name) {
     id
+    xid
+    source
     name
     alias
     birthdate

@@ -11,6 +11,8 @@ export async function getAll(client: DgraphClient, queryOptions: QueryOptions): 
     query getAuthors {
       authors(func: type(Author)) {
         uid
+        xid
+        source
         name
         thumbnail
         birthdate
@@ -18,6 +20,8 @@ export async function getAll(client: DgraphClient, queryOptions: QueryOptions): 
         alias
         texts: ~authors {
           uid
+          xid
+          source
           title
           url
           subject

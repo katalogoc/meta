@@ -10,6 +10,8 @@ export async function getByName(client: DgraphClient, name: string): Promise<Aut
     query getAuthor($name: string) {
       author(func: type(Author)) @filter(eq(name, $name) or allofterms(alias, $name)) {
         uid
+        xid
+        source
         name
         thumbnail
         birthdate
@@ -17,6 +19,8 @@ export async function getByName(client: DgraphClient, name: string): Promise<Aut
         alias
         texts: ~authors {
           uid
+          xid
+          source
           title
           url
           subject

@@ -10,11 +10,15 @@ export async function getById(client: DgraphClient, uid: string): Promise<Text |
     query getText($id: string) {
       text(func: uid($id)) {
         uid
+        xid
+        source
         title
         url
         subject
         authors {
           uid
+          xid
+          source
           name
           alias
           deathdate

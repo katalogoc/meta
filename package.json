@@ -4,7 +4,7 @@
   "description": "Meta info service",
   "main": "index.js",
   "scripts": {
-    "build": "tsc && cp src/config/config.json dist/config",
+    "build": "tsc",
     "test": "jest",
     "test:watch": "npm test -- --watch",
     "nodemon": "nodemon",

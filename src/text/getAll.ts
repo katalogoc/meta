@@ -11,11 +11,15 @@ export async function getAll(client: DgraphClient, queryOptions: QueryOptions): 
     query getTexts {
       texts(func: type(Text)) {
         uid
+        xid
+        source
         title
         url
         subject
         authors {
           uid
+          xid
+          source
           name
           alias
           deathdate
