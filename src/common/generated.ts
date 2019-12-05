@@ -25,6 +25,7 @@ export type Author = {
 
 export enum DataSource {
   Gutenberg = 'GUTENBERG',
+  Dbpedia = 'DBPEDIA',
   Hyped = 'HYPED'
 }
 
