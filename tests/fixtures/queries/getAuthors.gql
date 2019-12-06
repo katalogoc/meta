@@ -1,5 +1,5 @@
-query getAuthors($options: QueryOptions) {
-  authors(options: $options) {
+query getAuthors($filter: AuthorFilterInput, $options: QueryOptions) {
+  authors(filter: $filter, options: $options) {
     id
     xid
     source

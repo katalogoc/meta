@@ -5,8 +5,8 @@ export default {
     async author(_: any, { id }: any, { dataSources }: any) {
       return dataSources.authorAPI.getById(id);
     },
-    async authors(_: any, { id }: any, { dataSources }: any) {
-      return dataSources.authorAPI.getAll(id);
+    async authors(_: any, variables: any, { dataSources }: any) {
+      return dataSources.authorAPI.getAll(variables.filter, variables.options);
     },
     async searchAuthorByName(_: any, { name }: any, { dataSources }: any) {
       return dataSources.authorAPI.getByName(name);

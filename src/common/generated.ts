@@ -23,6 +23,22 @@ export type Author = {
   thumbnail?: Maybe<Scalars['String']>,
 };
 
+export type AuthorFilterInput = {
+  operations: Array<AuthorFilterOperation>,
+};
+
+export type AuthorFilterOperation = {
+  type: Operation,
+  field: AuthorIndexedField,
+  value: Scalars['String'],
+};
+
+export enum AuthorIndexedField {
+  Xid = 'xid',
+  Source = 'source',
+  Name = 'name'
+}
+
 export enum DataSource {
   Gutenberg = 'GUTENBERG',
   Dbpedia = 'DBPEDIA',
@@ -45,6 +61,10 @@ export type MutationSaveAuthorArgs = {
   author: SaveAuthorInput
 };
 
+export enum Operation {
+  Eq = 'eq'
+}
+
 export type Query = {
    __typename?: 'Query',
   author?: Maybe<Author>,
@@ -66,6 +86,7 @@ export type QuerySearchAuthorByNameArgs = {
 
 
 export type QueryAuthorsArgs = {
+  filter?: Maybe<AuthorFilterInput>,
   options?: Maybe<QueryOptions>
 };
 
@@ -194,6 +215,10 @@ export type ResolversTypes = {
   DataSource: DataSource,
   String: ResolverTypeWrapper<Scalars['String']>,
   Text: ResolverTypeWrapper<Text>,
+  AuthorFilterInput: AuthorFilterInput,
+  AuthorFilterOperation: AuthorFilterOperation,
+  Operation: Operation,
+  AuthorIndexedField: AuthorIndexedField,
   QueryOptions: QueryOptions,
   Int: ResolverTypeWrapper<Scalars['Int']>,
   Mutation: ResolverTypeWrapper<{}>,
@@ -210,6 +235,10 @@ export type ResolversParentTypes = {
   DataSource: DataSource,
   String: Scalars['String'],
   Text: Text,
+  AuthorFilterInput: AuthorFilterInput,
+  AuthorFilterOperation: AuthorFilterOperation,
+  Operation: Operation,
+  AuthorIndexedField: AuthorIndexedField,
   QueryOptions: QueryOptions,
   Int: Scalars['Int'],
   Mutation: {},

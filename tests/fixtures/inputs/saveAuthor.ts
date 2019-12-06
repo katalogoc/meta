@@ -67,6 +67,17 @@ const authors: HashMap<SaveAuthorInput> = {
     deathdate: '1905-03-24T00:00:00.092Z',
     texts: [],
   },
+  ['haruki-murakami']: {
+    id: null,
+    xid: '1ee4568e-a39e-49fd-83f7-ca268ec704b6',
+    source: DataSource.Dbpedia,
+    name: 'Haruki Murakami',
+    alias: ['Murakami'],
+    thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/7/75/HarukiMurakami.png',
+    birthdate: '1941-01-12T00:00:00.092Z',
+    deathdate: null,
+    texts: [],
+  },
 };
 
 export default authors;

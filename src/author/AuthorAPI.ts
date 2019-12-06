@@ -4,7 +4,7 @@ import { getAll } from './getAll';
 import { getById } from './getById';
 import { getByName } from './getByName';
 import { upsert } from './upsert';
-import { SaveAuthorInput, Author, QueryOptions } from '../common/types';
+import { SaveAuthorInput, Author, QueryOptions, AuthorFilterInput } from '../common/types';
 
 export class AuthorAPI extends DataSource {
   private client: DgraphClient;
@@ -15,8 +15,8 @@ export class AuthorAPI extends DataSource {
     this.client = client;
   }
 
-  public async getAll(queryOptions: QueryOptions): Promise<Author[]> {
-    return getAll(this.client, queryOptions);
+  public async getAll(filter: AuthorFilterInput, queryOptions: QueryOptions): Promise<Author[]> {
+    return getAll(this.client, filter, queryOptions);
   }
 
   public async getById(id: string): Promise<Author | null> {

@@ -1,15 +1,25 @@
 import { DgraphClient, ERR_ABORTED } from 'dgraph-js';
 import createLogger from 'hyped-logger';
-import { Author, QueryOptions } from '../common/types';
+import { Author, QueryOptions, AuthorFilterInput, AuthorFilterOperation } from '../common/types';
 import { makeAuthor } from './makeAuthor';
 import { AuthorNode } from './types';
 
 const logger = createLogger();
 
-export async function getAll(client: DgraphClient, queryOptions: QueryOptions): Promise<Author[]> {
+function generateFilterExpression(filter: AuthorFilterInput) {
+  return filter
+    ? `@filter(${filter.operations.map(({ type, field, value }: AuthorFilterOperation) => `${type}(${field}, ${value})`)})`
+    : '';
+}
+
+export async function getAll(
+  client: DgraphClient,
+  filter: AuthorFilterInput,
+  queryOptions: QueryOptions
+): Promise<Author[]> {
   const query = `
     query getAuthors {
-      authors(func: type(Author)) {
+      authors(func: type(Author)) ${generateFilterExpression(filter)} {
         uid
         xid
         source
@@ -42,7 +52,7 @@ export async function getAll(client: DgraphClient, queryOptions: QueryOptions): 
     return json.authors.map((node: AuthorNode) => makeAuthor(node));
   } catch (err) {
     if (err === ERR_ABORTED) {
-      return getAll(client, queryOptions);
+      return getAll(client, filter, queryOptions);
     } else {
       logger.error(`Couldn't get authors, error: ${err}`);
 

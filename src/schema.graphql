@@ -4,6 +4,10 @@ enum DataSource {
   HYPED
 }
 
+enum Operation {
+  eq
+}
+
 input QueryOptions {
   limit: Int = 100
   offset: Int = 0
@@ -21,6 +25,22 @@ type Author {
   thumbnail: String
 }
 
+enum AuthorIndexedField {
+  xid
+  source
+  name
+}
+
+input AuthorFilterOperation {
+  type: Operation!
+  field: AuthorIndexedField!
+  value: String!
+}
+
+input AuthorFilterInput {
+  operations: [AuthorFilterOperation!]!
+}
+
 type Text {
   id: ID!
   xid: ID
@@ -34,7 +54,7 @@ type Text {
 type Query {
   author(id: ID!): Author
   searchAuthorByName(name: String): Author
-  authors(options: QueryOptions): [Author!]!
+  authors(filter: AuthorFilterInput, options: QueryOptions): [Author!]!
   texts(options: QueryOptions): [Text!]!
   text(id: ID!): Text
 }
