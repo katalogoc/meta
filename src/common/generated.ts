@@ -49,6 +49,8 @@ export type Mutation = {
    __typename?: 'Mutation',
   saveText: Scalars['ID'],
   saveAuthor: Scalars['ID'],
+  deleteTexts: Array<Scalars['ID']>,
+  deleteAuthors: Array<Scalars['ID']>,
 };
 
 
@@ -59,6 +61,16 @@ export type MutationSaveTextArgs = {
 
 export type MutationSaveAuthorArgs = {
   author: SaveAuthorInput
+};
+
+
+export type MutationDeleteTextsArgs = {
+  ids: Array<Scalars['ID']>
+};
+
+
+export type MutationDeleteAuthorsArgs = {
+  ids: Array<Scalars['ID']>
 };
 
 export enum Operation {
@@ -262,6 +274,8 @@ export type AuthorResolvers<ContextType = any, ParentType extends ResolversParen
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   saveText?: Resolver<ResolversTypes['ID'], ParentType, ContextType, RequireFields<MutationSaveTextArgs, 'text'>>,
   saveAuthor?: Resolver<ResolversTypes['ID'], ParentType, ContextType, RequireFields<MutationSaveAuthorArgs, 'author'>>,
+  deleteTexts?: Resolver<Array<ResolversTypes['ID']>, ParentType, ContextType, RequireFields<MutationDeleteTextsArgs, 'ids'>>,
+  deleteAuthors?: Resolver<Array<ResolversTypes['ID']>, ParentType, ContextType, RequireFields<MutationDeleteAuthorsArgs, 'ids'>>,
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {

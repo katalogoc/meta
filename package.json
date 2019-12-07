@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "test": "jest",
+    "db:init": "ts-node --files --project tsconfig.json bin/prepareDb.ts",
+    "db:run": "bin/run-dgraph.sh",
+    "test": "npm run db:init && jest",
     "test:watch": "npm test -- --watch",
     "nodemon": "nodemon",
     "schema:publish": "apollo service:push --key service:postgres-day:2p5YYz-CY_kmCf_HYUJLIQ --endpoint \"http://localhost:8081/api\"",
@@ -49,7 +51,8 @@
     "koa-logger-winston": "0.0.2",
     "koa-router": "^7.4.0",
     "nconf": "^0.10.0",
-    "pm2": "^3.2.4"
+    "pm2": "^3.2.4",
+    "try-to-catch": "^2.0.0"
   },
   "devDependencies": {
     "@graphql-codegen/typescript": "1.8.2",
@@ -68,11 +71,11 @@
     "apollo-server-testing": "^2.3.1",
     "jest": "^24.9.0",
     "nodemon": "^1.18.10",
-    "prettier": "^1.15.3",
+    "prettier": "^1.19.1",
     "sinon": "^7.2.3",
     "ts-jest": "^24.1.0",
     "ts-node": "^8.0.2",
     "tslint": "^5.20.0",
-    "typescript": "^3.3.1"
+    "typescript": "^3.7.0"
   }
 }

@@ -2,28 +2,32 @@ import { createTestClient } from 'apollo-server-testing';
 import server from '../src/apollo';
 import { SAVE_AUTHOR, GET_AUTHOR } from './fixtures/queries';
 import fixtures from './fixtures/inputs/saveAuthor';
-import { prepareDb } from './helpers/prepareDb';
+import { deleteNodes } from './testTools/db';
 
 const { query, mutate } = createTestClient(server) as any;
 
+const nodesToDelete = [];
+
 describe('mutations/saveAuthor', () => {
-  beforeAll(async () => {
-    await prepareDb();
+  afterAll(async () => {
+    await deleteNodes(nodesToDelete);
   });
 
   test(`creates a new author if it doesn't exist yet`, async () => {
     const author = fixtures['john-doe'];
 
     const {
-      data: { saveAuthor },
+      data: { saveAuthor: id },
     } = await mutate({
       mutation: SAVE_AUTHOR,
       variables: {
         author,
       },
     });
-    expect(typeof saveAuthor).toBe('string');
-    expect(saveAuthor.length).toBeGreaterThan(0);
+    nodesToDelete.push(id);
+
+    expect(typeof id).toBe('string');
+    expect(id.length).toBeGreaterThan(0);
   });
 
   test(`updates an author if it exists`, async () => {
@@ -37,6 +41,8 @@ describe('mutations/saveAuthor', () => {
     });
 
     const id = initialResponse.data.saveAuthor;
+
+    nodesToDelete.push(id);
 
     expect(id.length).toBeGreaterThan(0);
 

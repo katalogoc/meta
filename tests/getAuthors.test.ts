@@ -2,14 +2,16 @@ import { createTestClient } from 'apollo-server-testing';
 import server from '../src/apollo';
 import { GET_AUTHORS, SAVE_AUTHOR } from './fixtures/queries';
 import fixtures from './fixtures/inputs/saveAuthor';
-import { prepareDb } from './helpers/prepareDb';
+import { deleteNodes } from './testTools/db';
 import { Author, AuthorFilterInput, AuthorFilterOperation, AuthorIndexedField, Operation } from '../src/common/types';
 
 const { query, mutate } = createTestClient(server) as any;
 
+const nodesToDelete = [];
+
 describe('queries/getAuthors', () => {
-  beforeAll(async () => {
-    await prepareDb();
+  afterAll(async () => {
+    await deleteNodes(nodesToDelete);
   });
 
   test(`gets a list of authors`, async () => {
@@ -25,7 +27,7 @@ describe('queries/getAuthors', () => {
     const author = fixtures['jill-kill'];
 
     const {
-      data: { saveAuthor },
+      data: { saveAuthor: id },
     } = await mutate({
       mutation: SAVE_AUTHOR,
       variables: {
@@ -33,13 +35,15 @@ describe('queries/getAuthors', () => {
       },
     });
 
+    nodesToDelete.push(id);
+
     const {
       data: { authors },
     } = await query({
       query: GET_AUTHORS,
     });
 
-    const jillKill = authors.find((a: Author) => a.id === saveAuthor);
+    const jillKill = authors.find((a: Author) => a.id === id);
 
     expect(jillKill).toBeDefined();
     expect(jillKill.name).toBe(author.name);
@@ -53,13 +57,15 @@ describe('queries/getAuthors', () => {
     const author = fixtures['haruki-murakami'];
 
     const {
-      data: { saveAuthor },
+      data: { saveAuthor: id },
     } = await mutate({
       mutation: SAVE_AUTHOR,
       variables: {
         author,
       },
     });
+
+    nodesToDelete.push(id);
 
     const operations: AuthorFilterOperation[] = [
       {
@@ -83,7 +89,7 @@ describe('queries/getAuthors', () => {
     });
 
 
-    const murakami = authors.find((a: Author) => a.id === saveAuthor);
+    const murakami = authors.find((a: Author) => a.id === id);
 
     expect(authors.length).toBe(1);
     expect(murakami.xid).toBe(author.xid);

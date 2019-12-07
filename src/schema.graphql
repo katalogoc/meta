@@ -84,4 +84,6 @@ input SaveTextInput {
 type Mutation {
   saveText(text: SaveTextInput!): ID!
   saveAuthor(author: SaveAuthorInput!): ID!
+  deleteTexts(ids: [ID!]!): [ID!]!
+  deleteAuthors(ids: [ID!]!): [ID!]!
 }

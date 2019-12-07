@@ -2,6 +2,7 @@ import * as dg from 'dgraph-js';
 import grpc from 'grpc';
 import createLogger from 'hyped-logger';
 import config from '../config';
+import { escapeString } from './escapeString';
 
 const logger = createLogger();
 
@@ -51,7 +52,7 @@ export function createClient() {
   return new dg.DgraphClient(clientStub);
 }
 
-export async function init(client: dg.DgraphClient) {
+export async function init(client: dg.DgraphClient): Promise<void> {
   const operation = new dg.Operation();
 
   operation.setSchema(schema);
@@ -70,7 +71,7 @@ export async function init(client: dg.DgraphClient) {
 // Drop all data including schema from the Dgraph instance. This is useful
 // for small examples such as this, since it puts Dgraph into a clean
 // state.
-export async function dropGraphAndSchema(client: dg.DgraphClient) {
+export async function dropGraphAndSchema(client: dg.DgraphClient): Promise<void> {
   const operation = new dg.Operation();
 
   operation.setDropAll(true);
@@ -83,5 +84,31 @@ export async function dropGraphAndSchema(client: dg.DgraphClient) {
     logger.error(`Could't drop database, error: ${err}`);
 
     throw err;
+  }
+}
+
+export async function deleteNodes(client: dg.DgraphClient, ids: string[]): Promise<string[]> {
+  const mutation = new dg.Mutation();
+
+  mutation.setDelNquads(ids.map((id: string) => `<${escapeString(id)}> * * .`).join('\n'));
+
+  const txn = client.newTxn();
+
+  try {
+    await txn.mutate(mutation);
+
+    await txn.commit();
+
+    return ids;
+  } catch (err) {
+    if (err === dg.ERR_ABORTED) {
+      return deleteNodes(client, ids);
+    } else {
+      logger.error(`Couldn't delete nodes, error: ${err}`);
+
+      throw err;
+    }
+  } finally {
+    await txn.discard();
   }
 }

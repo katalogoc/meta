@@ -1,7 +1,7 @@
 import { ApolloServer } from 'apollo-server-koa';
 import path from 'path';
 import { importSchema } from 'graphql-import';
-import { makeExecutableSchema } from 'graphql-tools';
+import { makeExecutableSchema, IResolvers } from 'graphql-tools';
 import config from './config';
 import resolvers from './resolvers';
 import { createClient } from './common/db';
@@ -10,17 +10,16 @@ import { TextAPI } from './text';
 
 const typeDefs = importSchema(path.join(__dirname, 'schema.graphql'));
 
-const dbClient = createClient();
-
-dbClient.setDebugMode(config.get('DGRAPH_DEBUG_MODE'));
-
-const schema = makeExecutableSchema({ typeDefs, resolvers });
+const schema = makeExecutableSchema({ typeDefs, resolvers: resolvers as IResolvers });
 
 export default new ApolloServer({
   schema,
   dataSources: () => ({
-    textAPI: new TextAPI(dbClient),
-    authorAPI: new AuthorAPI(dbClient),
+    textAPI: new TextAPI(),
+    authorAPI: new AuthorAPI(),
+  }),
+  context: () => ({
+    client: createClient(),
   }),
   cacheControl: true,
   engine: {

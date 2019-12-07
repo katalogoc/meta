@@ -1,26 +1,30 @@
-import { DataSource } from 'apollo-datasource';
-import { DgraphClient } from 'dgraph-js';
-import { SaveTextInput, Text, QueryOptions } from '../common/types';
+import { DataSource, DataSourceConfig } from 'apollo-datasource';
+import { SaveTextInput, Text, QueryOptions, DataSourceContext } from '../common/types';
 import { getAll } from './getAll';
 import { getById } from './getById';
 import { upsert } from './upsert';
+import { deleteNodes } from '../common/db';
 
 export class TextAPI extends DataSource {
-  private client: DgraphClient;
+  private context: DataSourceContext;
 
-  constructor(client: DgraphClient) {
-    super();
-    this.client = client;
+  public initialize(config: DataSourceConfig<DataSourceContext>) {
+    this.context = config.context;
   }
 
   public async getAll(options: QueryOptions): Promise<Text[]> {
-    return getAll(this.client, options);
+    return getAll(this.context.client, options);
   }
+
   public async getById(id: string): Promise<Text | null> {
-    return getById(this.client, id);
+    return getById(this.context.client, id);
   }
 
   public async upsert(text: SaveTextInput): Promise<string> {
-    return upsert(this.client, text);
+    return upsert(this.context.client, text);
+  }
+
+  public async deleteTexts(ids: string[]): Promise<string[]> {
+    return deleteNodes(this.context.client, ids);
   }
 }

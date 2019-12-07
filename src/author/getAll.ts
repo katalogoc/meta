@@ -1,16 +1,11 @@
 import { DgraphClient, ERR_ABORTED } from 'dgraph-js';
 import createLogger from 'hyped-logger';
-import { Author, QueryOptions, AuthorFilterInput, AuthorFilterOperation } from '../common/types';
+import { Author, QueryOptions, AuthorFilterInput } from '../common/types';
 import { makeAuthor } from './makeAuthor';
 import { AuthorNode } from './types';
+import { dgraphFilter } from '../common/dgraphTools';
 
 const logger = createLogger();
-
-function generateFilterExpression(filter: AuthorFilterInput) {
-  return filter
-    ? `@filter(${filter.operations.map(({ type, field, value }: AuthorFilterOperation) => `${type}(${field}, ${value})`)})`
-    : '';
-}
 
 export async function getAll(
   client: DgraphClient,
@@ -19,7 +14,7 @@ export async function getAll(
 ): Promise<Author[]> {
   const query = `
     query getAuthors {
-      authors(func: type(Author)) ${generateFilterExpression(filter)} {
+      authors(func: type(Author)) ${dgraphFilter(filter?.operations)} {
         uid
         xid
         source

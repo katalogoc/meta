@@ -3,13 +3,15 @@ import server from '../src/apollo';
 import { GET_TEXT, SAVE_TEXT, SAVE_AUTHOR } from './fixtures/queries';
 import fixtures from './fixtures/inputs/saveText';
 import authors from './fixtures/inputs/saveAuthor';
-import { prepareDb } from './helpers/prepareDb';
+import { deleteNodes } from './testTools/db';
 
 const { query, mutate } = createTestClient(server) as any;
 
+const nodesToDelete = [];
+
 describe('queries/getText', () => {
-  beforeAll(async () => {
-    await prepareDb();
+  afterAll(async () => {
+    await deleteNodes(nodesToDelete);
   });
 
   test(`gets a text if it exists`, async () => {
@@ -23,6 +25,8 @@ describe('queries/getText', () => {
     });
 
     const id = mutationResponse.data.saveText;
+
+    nodesToDelete.push(id);
 
     expect(id.length).toBeGreaterThan(0);
 
@@ -48,6 +52,8 @@ describe('queries/getText', () => {
         author: juleVerne,
       },
     });
+
+    nodesToDelete.push(authorId);
 
     const julesVerneBook = fixtures['around-the-world-in-80-days'];
 

@@ -1,29 +1,37 @@
-import { SaveAuthorInput, SaveTextInput } from './common/types';
+import { Resolvers } from './common/types';
 
-export default {
+const resolvers: Resolvers = {
   Query: {
-    async author(_: any, { id }: any, { dataSources }: any) {
-      return dataSources.authorAPI.getById(id);
+    async author(_, variables, { dataSources }) {
+      return dataSources.authorAPI.getById(variables.id);
     },
-    async authors(_: any, variables: any, { dataSources }: any) {
+    async authors(_, variables, { dataSources }) {
       return dataSources.authorAPI.getAll(variables.filter, variables.options);
     },
-    async searchAuthorByName(_: any, { name }: any, { dataSources }: any) {
-      return dataSources.authorAPI.getByName(name);
+    async searchAuthorByName(_, variables, { dataSources }) {
+      return dataSources.authorAPI.getByName(variables.name);
     },
-    async text(_: any, { id }: any, { dataSources }: any) {
-      return dataSources.textAPI.getById(id);
+    async text(_, variables, { dataSources }) {
+      return dataSources.textAPI.getById(variables.id);
     },
-    async texts(_: any, { options }: any, { dataSources }: any) {
-      return dataSources.textAPI.getAll(options);
+    async texts(_, variables, { dataSources }) {
+      return dataSources.textAPI.getAll(variables.options);
     },
   },
   Mutation: {
-    async saveText(_: any, { text }: { text: SaveTextInput }, { dataSources }: any) {
-      return dataSources.textAPI.upsert(text);
+    async saveText(_, variables, { dataSources }) {
+      return dataSources.textAPI.upsert(variables.text);
     },
-    async saveAuthor(_: any, { author }: { author: SaveAuthorInput }, { dataSources }: any) {
-      return dataSources.authorAPI.upsert(author);
+    async saveAuthor(_, variables, { dataSources }) {
+      return dataSources.authorAPI.upsert(variables.author);
+    },
+    async deleteTexts(_, variables, { dataSources }) {
+      return dataSources.textAPI.deleteTexts(variables.ids);
+    },
+    async deleteAuthors(_, variables, { dataSources }) {
+      return dataSources.authorAPI.deleteAuthors(variables.ids);
     },
   },
 };
+
+export default resolvers;

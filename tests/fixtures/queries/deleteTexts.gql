@@ -1,0 +1,3 @@
+mutation deleteTexts($ids: [ID!]!) {
+  deleteTexts(ids: $ids)
+}

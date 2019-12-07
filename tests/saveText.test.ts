@@ -3,17 +3,15 @@ import server from '../src/apollo';
 import { SAVE_TEXT, SAVE_AUTHOR } from './fixtures/queries';
 import texts from './fixtures/inputs/saveText';
 import authors from './fixtures/inputs/saveAuthor';
-import { prepareDb } from './helpers/prepareDb';
+import { deleteNodes } from './testTools/db';
 
 const { mutate } = createTestClient(server) as any;
 
-describe('mutations/saveText', () => {
-  beforeAll(async () => {
-    await prepareDb();
-  });
+const nodesToDelete = [];
 
+describe('mutations/saveText', () => {
   afterAll(async () => {
-    await prepareDb();
+    await deleteNodes(nodesToDelete);
   });
 
   test(`creates a new text if it doesn't exist yet`, async () => {
