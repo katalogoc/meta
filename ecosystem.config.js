@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'hyped-text/meta',
-      script: 'dist/index.js',
+      script: 'dist/run.js',
       mode: 'cluster',
       instances: 'max',
       autorestart: true,

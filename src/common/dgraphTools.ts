@@ -7,5 +7,5 @@ export interface FilterOperation {
 }
 
 export function dgraphFilter(operations: FilterOperation[] = []): string {
-  return `@filter(${operations.map(({ type, field, value }: FilterOperation) => `${type}(${field}, ${escapeString(value)})`)})`;
+  return `@filter(${operations.map(({ type, field, value }: FilterOperation) => `${type}(${field}, "${escapeString(value)}")`)})`;
 }

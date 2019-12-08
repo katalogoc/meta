@@ -2,12 +2,12 @@ import { DgraphClient, Mutation, Request, ERR_ABORTED } from 'dgraph-js';
 import createLogger from 'hyped-logger';
 import { blankNodeId } from '../common/util';
 import { getById } from './getById';
-import { SaveAuthorInput, Author, Text } from '../common/types';
+import { SaveAuthorInput, Author } from '../common/types';
 
 const logger = createLogger();
 
 export async function upsert(client: DgraphClient, author: SaveAuthorInput): Promise<string> {
-  const { name, alias, birthdate, deathdate, thumbnail, xid = null, source = null } = author;
+  const { name, alias, birthdate, deathdate, thumbnail, xid = null, source = null, texts: textIds = [] } = author;
 
   const mutation = new Mutation();
 
@@ -19,11 +19,16 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
 
   const req = new Request();
 
-  const texts: Text[] = [];
-
   const aliasObjects = alias.map((a: string) => ({
     uid,
     alias: a,
+  }));
+
+  const texts = textIds.map((textId: string) => ({
+    uid,
+    texts: {
+      uid: textId,
+    },
   }));
 
   mutation.setSetJson([
@@ -36,10 +41,10 @@ export async function upsert(client: DgraphClient, author: SaveAuthorInput): Pro
       birthdate,
       deathdate,
       thumbnail,
-      texts,
       ['dgraph.type']: 'Author',
     },
     ...aliasObjects,
+    ...texts,
   ]);
 
   req.setMutationsList([mutation]);

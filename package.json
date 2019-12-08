@@ -4,7 +4,7 @@
   "description": "Meta info service",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp ./src/schema.graphql ./dist",
     "db:init": "ts-node --files --project tsconfig.json bin/prepareDb.ts",
     "db:run": "bin/run-dgraph.sh",
     "test": "npm run db:init && jest",
@@ -14,7 +14,7 @@
     "schema:check": "apollo service:check --key service:postgres-day:2p5YYz-CY_kmCf_HYUJLIQ --endpoint \"http://localhost:8081/api\"",
     "schema:introspect": "curl -X POST -d \"@fixtures/introspect.json\" --header \"Content-Type: application/json\" http://localhost:8081 /api",
     "seed": "dotenv sequelize db:seed:all",
-    "start": "NODE_PATH=. pm2 start --no-daemon",
+    "start": "pm2 start --no-daemon",
     "start:dev": "nodemon",
     "gen:apq": "persistgraphql src/interfaces/graphql/persistedQueries/ src/interfaces/graphql/persistedQueries/config.json",
     "lint": "tslint --project .",
