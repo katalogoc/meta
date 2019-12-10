@@ -3,12 +3,6 @@ export function escapeString(str: string) {
     switch (char) {
       case '"':
         return '\\"';
-      case '\x08':
-        return '\\b';
-      case '\x09':
-        return '\\t';
-      case '\x1a':
-        return '\\z';
       case '\n':
         return '\\n';
       case '\r':
@@ -16,7 +10,6 @@ export function escapeString(str: string) {
       case '\"':
       case '\'':
       case '\\':
-      case '%':
         return '\\' + char; // prepends a backslash to backslash, percent,
       // and double/single quotes
       default:
