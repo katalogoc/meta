@@ -42,7 +42,7 @@ export enum AuthorIndexedField {
 export enum DataSource {
   Gutenberg = 'GUTENBERG',
   Dbpedia = 'DBPEDIA',
-  Hyped = 'HYPED'
+  Katalogoc = 'KATALOGOC'
 }
 
 export type Mutation = {

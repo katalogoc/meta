@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'hyped-text/meta',
+      name: 'katalogoc/meta',
       script: 'dist/run.js',
       mode: 'cluster',
       instances: 'max',

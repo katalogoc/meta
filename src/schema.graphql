@@ -1,7 +1,7 @@
 enum DataSource {
   GUTENBERG
   DBPEDIA
-  HYPED
+  KATALOGOC
 }
 
 enum Operation {

@@ -5,7 +5,7 @@ const port = 8082;
 module.exports = {
   client: {
     service: {
-      name: 'hyped-text-meta',
+      name: 'katalogoc/meta',
       url: `http://${host}:${port}/api`,
     },
   },
