@@ -7,7 +7,7 @@
     "build": "tsc && cp ./src/schema.graphql ./dist",
     "build:image": "docker build -q -t katalogoc/meta:latest .",
     "db:init": "ts-node --files --project tsconfig.json bin/prepareDb.ts",
-    "db:run": "bin/run-dgraph.sh",
+    "db:run": "bin/runDgraph.sh",
     "test": "npm run db:init && jest",
     "test:watch": "npm test -- --watch",
     "nodemon": "nodemon",
