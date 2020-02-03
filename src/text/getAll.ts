@@ -9,7 +9,7 @@ const logger = createLogger();
 export async function getAll(client: DgraphClient, queryOptions: QueryOptions): Promise<Text[]> {
   const query = `
     query getTexts {
-      texts(func: type(Text)) {
+      texts(func: type(Text), orderasc: title@., offset: 0, first: 100) {
         uid
         xid
         source
