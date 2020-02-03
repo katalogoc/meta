@@ -1,4 +1,5 @@
 import { DataSource, DataSourceConfig } from 'apollo-datasource';
+import fetch, { Response } from 'node-fetch';
 import { SaveTextInput, Text, QueryOptions, DataSourceContext } from '../common/types';
 import { getAll } from './getAll';
 import { getById } from './getById';
@@ -26,5 +27,13 @@ export class TextAPI extends DataSource {
 
   public async deleteTexts(ids: string[]): Promise<string[]> {
     return deleteNodes(this.context.client, ids);
+  }
+
+  public async getTextContentByUrl(url: string): Promise<string | null> {
+    try {
+      return await fetch(url).then((res: Response) => res.text());
+    } catch {
+      return null;
+    }
   }
 }

@@ -32,6 +32,11 @@ const resolvers: Resolvers = {
       return dataSources.authorAPI.deleteAuthors(variables.ids);
     },
   },
+  Text: {
+    async content(text, {}, { dataSources }) {
+      return dataSources.textAPI.getTextContentByUrl(text.url);
+    },
+  },
 };
 
 export default resolvers;

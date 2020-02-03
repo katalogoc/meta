@@ -14,12 +14,12 @@
     "schema:publish": "apollo service:push --key service:postgres-day:2p5YYz-CY_kmCf_HYUJLIQ --endpoint \"http://localhost:8082/api\"",
     "schema:check": "apollo service:check --key service:postgres-day:2p5YYz-CY_kmCf_HYUJLIQ --endpoint \"http://localhost:8082/api\"",
     "schema:introspect": "curl -X POST -d \"@fixtures/introspect.json\" --header \"Content-Type: application/json\" http://localhost:8082 /api",
+    "schema:codegen": "graphql-codegen --config codegen.yml",
     "seed": "dotenv sequelize db:seed:all",
     "start": "node dist/run.js",
     "start:dev": "nodemon",
     "gen:apq": "persistgraphql src/interfaces/graphql/persistedQueries/ src/interfaces/graphql/persistedQueries/config.json",
-    "lint": "tslint --project .",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "lint": "tslint --project ."
   },
   "repository": {
     "type": "git",
@@ -52,6 +52,7 @@
     "koa-logger-winston": "0.0.2",
     "koa-router": "^7.4.0",
     "nconf": "^0.10.0",
+    "node-fetch": "^2.6.0",
     "pm2": "^3.2.4",
     "try-to-catch": "^2.0.0"
   },
@@ -66,10 +67,12 @@
     "@types/lodash": "^4.14.144",
     "@types/nconf": "^0.10.0",
     "@types/node": "^10.12.21",
+    "@types/node-fetch": "^2.5.4",
     "@types/protobufjs": "^6.0.0",
     "@types/sinon": "^7.0.5",
     "apollo": "^2.19.1",
     "apollo-server-testing": "^2.3.1",
+    "graphql-toolkit": "^0.7.5",
     "jest": "^24.9.0",
     "nodemon": "^1.18.10",
     "prettier": "^1.19.1",

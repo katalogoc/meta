@@ -46,6 +46,7 @@ type Text {
   xid: ID
   source: DataSource
   url: String
+  content: String
   title: String
   authors: [Author!]
   subject: [String!]
